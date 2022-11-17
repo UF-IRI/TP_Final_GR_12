@@ -3,6 +3,7 @@
 #include <ctime>
 #include <math.h>
 #include <string>
+using namespace std;
 
 struct Ultima_consulta
 {
@@ -11,7 +12,7 @@ struct Ultima_consulta
 	time_t fechasolicitud;
 	bool presento;
 	string matriculamedica;
-} ultconsul;
+};
 
 struct Contacto
 {
@@ -20,7 +21,7 @@ struct Contacto
 	string celular;
 	string direccion;
 	string mail;
-} contact;
+};
 
 struct Paciente
 {
@@ -31,7 +32,7 @@ struct Paciente
 	Fecha nacimiento;
 	string estado;
 	unsigned int id_os;
-} pac;
+};
 
 struct medicos
 {
@@ -41,13 +42,7 @@ struct medicos
 	string telefono;
 	string especialidad;
 	bool activo;
-} med;
-
-struct obra_social
-{
-	unsigned int id;
-	string obra_social;
-} obs;
+};
 
 Paciente* leer_Paciente(Paciente *& aux,int *tamactual,int cantaumentar);
 Contacto* leer_Contacto(Contacto*& aux2, int* tamactual2, int cantaumentar2);
@@ -58,9 +53,9 @@ int horaramdom();
 int diarandom();
 int mesrandom();
 int aniorandom();
-void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
+//void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
 double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2);
-bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
+//bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 ctime nuevacons();
 void buscarpac(Paciente*& aux, Contacto*& aux2);
 void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2);
