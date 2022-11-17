@@ -1,15 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include <math.h>
+#include <cmath>
 #include <string>
-using namespace std;
 
 struct Ultima_consulta
 {
 	unsigned int dni;
-	time_t fechaturno;
 	time_t fechasolicitud;
+	time_t fechaturno;
 	bool presento;
 	string matriculamedica;
 };
@@ -29,7 +28,7 @@ struct Paciente
 	string Nombre;
 	string Apellido;
 	string Genero;
-	Fecha nacimiento;
+	time_t nacimiento;
 	string estado;
 	unsigned int id_os;
 };
@@ -44,17 +43,17 @@ struct medicos
 	bool activo;
 };
 
-Paciente* leer_paciente(Paciente *& aux,int *tamactual,int cantaumentar);
-Contacto* leer_contactos(Contacto*& aux2, int* tamactual2, int cantaumentar2);
-Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int cantaumentar3);
-medicos* leer_medicos(medicos*& aux4, int* tamactual4, int cantaumentar4);
+Paciente* leer_paciente(Paciente *& aux,int *tamactual);
+Contacto* leer_contactos(Contacto*& aux2, int* tamactual2);
+Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3);
+medicos* leer_medicos(medicos*& aux4, int* tamactual4);
 int minrandom();
 int horaramdom();
 int diarandom();
 int mesrandom();
 int aniorandom();
 //void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
-double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2);
+double distanciafechas(Ultima_consulta*&aux2);
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 ctime nuevacons();
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
