@@ -31,7 +31,7 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 
 
 //hay que cambiar el leer paciente
-Paciente* leer_paciente(Paciente*& aux,int *tamactual,int cantaumentar)
+Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
 	Paciente aux;
 	Contacto aux2;
@@ -83,7 +83,7 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual,int cantaumentar)
 
 	return;
 }
-Contacto* leer_contactos(Contactos*& aux2, int* tamactual2, int cantaumentar2) {
+Contacto* leer_contactos(Contactos*& aux2, int* tamactual2) {
 	ifstream fp;
 	int i = 0,j=0;
 	
@@ -110,9 +110,9 @@ Contacto* leer_contactos(Contactos*& aux2, int* tamactual2, int cantaumentar2) {
 	fp.close();
 	return aux2;
 }
-Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int cantaumentar3) {
+Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
 	ifstream fp;
-	int i = 0;
+	int i = 0,j=0;
 
 	char coma;
 	string header;
@@ -121,16 +121,25 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int can
 		return nullptr;
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
-		fp >> aux3.[i]DNI >> coma >> aux3.[i]fechasolicitud >> coma >> aux3.[i]fechaturno >> coma >> aux3.[i]presento >> coma >> aux3.[i]matriculamedica;
-		i++;
+		*tamactual3 = *tamactual3 + 1;
+		Ultima_consulta* consul = new consul[*tamactual3];
+		while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) {
+			consul[i] = aux3[i];
+			i++;
+		}
+
+		fp >> aux3.[j]DNI >> coma >> aux3.[j]fechasolicitud >> coma >> aux3.[j]fechaturno >> coma >> aux3.[j]presento >> coma >> aux3.[j]matriculamedica;
+		j++;
 	}
-	//falta hacer el resize
+	delete[]aux3;
+	aux3 = consul;
+	delete[]consul;
 	fp.close();
 	return aux3;
 }
-medicos* leer_medicos(medicos*& aux4, int* tamactual4, int cantaumentar) {
+medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
 	ifstream fp;
-	int i = 0;
+	int i = 0,j=0;
 
 	char coma;
 	string header;
@@ -139,10 +148,18 @@ medicos* leer_medicos(medicos*& aux4, int* tamactual4, int cantaumentar) {
 		return nullptr;
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
 	while (fp) {
-		fp >> aux4.[i]matricula >> coma >> aux4.[i]nombre >> coma >> aux4.[i]apellido >> coma >> aux4.[i]telefono >> coma >> aux4.[i]especialidad>>coma>>aux4.[i]activo;
-		i++;
+		*tamactual4 = *tamactual4 + 1;
+		medicos* med = new medicos[*tamactual4];
+		while (i < *tamactual - 1 && *tamactual - 1 != 0) {
+			med[i] = aux4[i];
+			i++;
+		}
+		fp >> aux4.[j]matricula >> coma >> aux4.[j]nombre >> coma >> aux4.[j]apellido >> coma >> aux4.[j]telefono >> coma >> aux4.[j]especialidad>>coma>>aux4.[j]activo;
+		j++;
 	}
-	//falta hacer el resize
+	delete[]aux4;
+	aux4 = med;
+	delete[]med;
 	fp.close();
 	return aux3;
 }
