@@ -157,9 +157,13 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 	minrand = minrandom();
 	horarand = horarandom(); //las horas en la libreria van de 0 a 23
 	diarand = diarandom();
-	mesrand = mesrandom();//los meses en la libreria van de 0 a 11
+	do {
+		mesrand = mesrandom();//agregar casos febrero
+		if (mesrand == 2 && diarand == 28)
+			break;//los meses en la libreria van de 0 a 11
+	} while (mesrand == 1 || mesrand == 3 || mesrand == 5 || mesrand == 8 || mesrand == 10 && diarand == 31);
 	aniorand = aniorandom();  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
-
+	
 	tm consulta = { 0, minrand, horarand, diarand, mesrand,aniorand };
 	time_t consulta_reprogramada = mktime(&consulta);
 
