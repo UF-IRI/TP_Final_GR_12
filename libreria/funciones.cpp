@@ -85,7 +85,8 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual,int cantaumentar)
 }
 Contacto* leer_contactos(Contactos*& aux2, int* tamactual2, int cantaumentar2) {
 	ifstream fp;
-	int i = 0;
+	int i = 0,j=0;
+	
 
 	char coma;
 	string header;
@@ -94,10 +95,18 @@ Contacto* leer_contactos(Contactos*& aux2, int* tamactual2, int cantaumentar2) {
 		return nullptr;
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
-		fp >> aux2.[i]DNI >> coma >> aux2.[i]telefono >> coma >> aux2.[i]celular >> coma >> aux2.[i]direccion >> coma >> aux2.[i]mail;
-		i++;
+		*tamactual2 = *tamactual2 + 1;
+		Contacto* cont = new cont[*tamactual2];
+		while (i < *tamactual - 1 && *tamactual - 1 != 0) {
+			cont[i] = aux2[i];
+			i++;
+		}
+		fp >> aux2.[j]DNI >> coma >> aux2.[j]telefono >> coma >> aux2.[j]celular >> coma >> aux2.[j]direccion >> coma >> aux2.[j]mail;
+		j++;
 	}
-	//falta hacer el resize
+	delete[]aux2;
+	aux2 = cont;
+	delete[]cont;
 	fp.close();
 	return aux2;
 }
