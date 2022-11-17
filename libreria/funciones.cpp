@@ -1,6 +1,8 @@
 using namespace std;
-
-void leer_archivo(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial)
+//paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos
+//completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
+//no se si el uso de tamactual y cantaumentar esta bien xq queria hacer resize
+Paciente* leer_paciente(Paciente*& aux,int *tamactual,int cantaumentar)
 {
 	Paciente aux;
 	Contacto aux2;
@@ -52,8 +54,61 @@ void leer_archivo(string Pacientes, string Contactos, string Consultas, string M
 
 	return;
 }
+Contacto* leer_contactos(Contactos*& aux2, int* tamactual2, int cantaumentar2) {
+	ifstream fp;
+	int i = 0;
 
-double distanciafechas(Paciente aux)
+	char coma;
+	string header;
+	fp.open("Contactos.csv", ios::in);
+	if (!(fp.is_open()))
+		return nullptr;
+	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	while (fp) {
+		fp >> aux2.[i]DNI >> coma >> aux2.[i]telefono >> coma >> aux2.[i]celular >> coma >> aux2.[i]direccion >> coma >> aux2.[i]mail;
+		i++;
+	}
+	//falta hacer el resize
+	fp.close();
+	return aux2;
+}
+Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int cantaumentar3) {
+	ifstream fp;
+	int i = 0;
+
+	char coma;
+	string header;
+	fp.open("Consultas.csv", ios::in);
+	if (!(fp.is_open()))
+		return nullptr;
+	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	while (fp) {
+		fp >> aux3.[i]DNI >> coma >> aux3.[i]fechasolicitud >> coma >> aux3.[i]fechaturno >> coma >> aux3.[i]presento >> coma >> aux3.[i]matriculamedica;
+		i++;
+	}
+	//falta hacer el resize
+	fp.close();
+	return aux3;
+}
+void leer_medicos(medicos*&, int* tamactual4, int cantaumentar) {
+	ifstream fp;
+	int i = 0;
+
+	char coma;
+	string header;
+	fp.open("Consultas.csv", ios::in);
+	if (!(fp.is_open()))
+		return nullptr;
+	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
+	while (fp) {
+		fp >> aux4.[i]matricula >> coma >> aux4.[i]nombre >> coma >> aux4.[i]apellido >> coma >> aux4.[i]telefono >> coma >> aux4.[i]especialidad>>coma>>aux4.[i]activo;
+		i++;
+	}
+	//falta hacer el resize
+	fp.close();
+	return aux3;
+}
+double distanciafechas(Paciente*& aux)
 {
 	tm inicio = aux;    //es la fecha de la última consulta que tuvo programada el paciente
 	tm actual;   //es la fecha y hora actual 
@@ -83,8 +138,8 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 	return ctime(&consulta_reprogramada); //la funcion ctiempo(ctime) nos pasa la fecha de la consulta_reprogramada.
 }
 
-void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial)
-{
+void cargar_archivos(Paciente *& aux,Contacto *& aux2,Ultima_consulta *& aux3
+{//aca se tienen que cargar los archivados
 	string encabezado;
 	fstream fp2;
 	fp2.open("archivo", ios::out);
@@ -97,4 +152,22 @@ void cargar_archivos(string Pacientes, string Contactos, string Consultas, strin
 	escribir(archivo, aux2);//cargamos los datos en el archivo
 	fp2.close();
 	return;
+}
+
+
+void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {
+	int i = 0,j=0;
+	for (i; i < *tamactual; i++) {
+		for (j; j < *tamactual2; j++) {
+			if (aux.[i]DNI == aux2.[j]DNI) {
+				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << "," << aux.[i]is_os << endl;
+				cout << aux2.[j]telefono << "," << aux2.[j]celular << "," << aux2.[j]mail << endl;
+			}
+			else {
+				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << ", no hay contacto registrado" << endl;;
+			}
+		}
+
+	}
+	
 }
