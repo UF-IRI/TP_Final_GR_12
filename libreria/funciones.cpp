@@ -1,5 +1,5 @@
 using namespace std;
-//paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos
+//paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos, los archivos ya los tenes
 //completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
 //no se si el uso de tamactual y cantaumentar esta bien xq queria hacer resize
 Paciente* leer_paciente(Paciente*& aux,int *tamactual,int cantaumentar)
@@ -90,7 +90,7 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int can
 	fp.close();
 	return aux3;
 }
-void leer_medicos(medicos*&, int* tamactual4, int cantaumentar) {
+medicos* leer_medicos(medicos*& aux4, int* tamactual4, int cantaumentar) {
 	ifstream fp;
 	int i = 0;
 
@@ -108,7 +108,7 @@ void leer_medicos(medicos*&, int* tamactual4, int cantaumentar) {
 	fp.close();
 	return aux3;
 }
-double distanciafechas(Paciente*& aux)
+double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2)
 {
 	tm inicio = aux;    //es la fecha de la última consulta que tuvo programada el paciente
 	tm actual;   //es la fecha y hora actual 
@@ -121,16 +121,44 @@ double distanciafechas(Paciente*& aux)
 	}
 	return diferencia;
 }
-
+int minrandom() {
+	srand(time(NULL));
+	int valor = rand % 60;
+	return valor;
+}
+int horaramdom() {
+	int valor;
+	srand(time(NULL));
+	valor = rand() % 24;
+	return valor;
+}
+int diarandom() {
+	srand(time(NULL));
+	int valor;
+	valor = rand() % 31;
+	return valor;
+}
+int mesrandom() {
+	int valor;
+	srand(time(NULL));
+	valor = rand() % 12;
+	return valor;
+}
+int aniorandom() {
+	srand(time(NULL));
+	int valor;
+	valor = (rand() % 3) + 122;
+	return valor;
+}
 ctime nuevacons()  //funcion para programar consulta aleatoria
 {
-	srand(time(NULL)); //TENDRIAMO QUE HACER EL RANDOM EN UNA FUNCION DISTINTA.
+
 	int minrand, horarand, diarand, mesrand, aniorand;
-	minrand = rand() % 59;
-	horarand = rand() % 23; //las horas en la libreria van de 0 a 23
-	diarand = rand() % 31;
-	mesrand = rand() % 11;//los meses en la libreria van de 0 a 11
-	aniorand = (rand() % 3) + 122;  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
+	minrand = minrandom();
+	horarand = horarandom(); //las horas en la libreria van de 0 a 23
+	diarand = diarandom();
+	mesrand = mesrandom();//los meses en la libreria van de 0 a 11
+	aniorand = aniorandom();  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
 
 	tm consulta = { 0, minrand, horarand, diarand, mesrand,aniorand };
 	time_t consulta_reprogramada = mktime(&consulta);
@@ -138,7 +166,7 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 	return ctime(&consulta_reprogramada); //la funcion ctiempo(ctime) nos pasa la fecha de la consulta_reprogramada.
 }
 
-void cargar_archivos(Paciente *& aux,Contacto *& aux2,Ultima_consulta *& aux3
+void cargar_archivos(Paciente *& aux,Contacto *& aux2,Ultima_consulta *& aux3)
 {//aca se tienen que cargar los archivados
 	string encabezado;
 	fstream fp2;
@@ -153,6 +181,7 @@ void cargar_archivos(Paciente *& aux,Contacto *& aux2,Ultima_consulta *& aux3
 	fp2.close();
 	return;
 }
+
 
 
 void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {
@@ -171,3 +200,31 @@ void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {
 	}
 	
 }
+
+void archivados(Ultima_consulta*& aux,Paciente *&aux2,int *tamactual,int*tamactual2) {
+	ofstream fp;
+	int i = 0,j=0,k=0;
+	fp.open("Archivados.cvs", ios::out);
+	if (!(fp.is_open()))
+		return;
+	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
+	while (fp) {//no se si esta bien poner esto cuando se crea un archivo
+		if (&& aux.[j]presento==0) {	//funcion mas de 10 anos bool
+			fp << aux2.[j]DNI << ",";
+			for (i = j; i < *tamactual2; i++) {
+				for (k = 0; k < *tamactual; k++) {
+					if (aux2.[i]DNI == aux.[k]DNI) {
+						fp << aux.[k]Nombre << "," << aux.[k]Apellido << "," << aux.[k]Sexo << "," << aux.[k]Estado << "," << aux.[k]id_os << endl;
+					}
+					else {
+						continue;
+					}
+				}
+			}
+		}j++;
+	}
+	fp.close();
+	return;
+		}
+	
+

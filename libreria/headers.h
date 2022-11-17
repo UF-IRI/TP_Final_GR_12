@@ -49,13 +49,18 @@ struct obra_social
 	string obra_social;
 } obs;
 
-void leer_Paciente(Paciente *& aux,int *tamactual,int cantaumentar);
-void leer_Contacto(Contacto*& aux2, int* tamactual2, int cantaumentar2);
-void leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int cantaumentar3);
-void leer_medico(medicos*& aux4, int* tamactual4, int cantaumentar4);
-
+Paciente* leer_Paciente(Paciente *& aux,int *tamactual,int cantaumentar);
+Contacto* leer_Contacto(Contacto*& aux2, int* tamactual2, int cantaumentar2);
+Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3, int cantaumentar3);
+medicos* leer_medico(medicos*& aux4, int* tamactual4, int cantaumentar4);
+int minrandom();
+int horaramdom();
+int diarandom();
+int mesrandom();
+int aniorandom();
 void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
-double distanciafechas(Paciente aux);
+double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2);
 bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 ctime nuevacons();
 void buscarpac(Paciente*& aux, Contacto*& aux2);
+void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2);
