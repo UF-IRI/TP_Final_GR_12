@@ -177,11 +177,15 @@ void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* ta
 
 }
 
-double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2)
+double distanciafechas(Ultima_consulta*&aux2)
 {
-	tm inicio = aux;    //es la fecha de la última consulta que tuvo programada el paciente
-	tm actual;   //es la fecha y hora actual 
-	time_t x = mktime(&inicio);     //el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
+	tm inicio = *aux2.fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
+	tm actual; //es la fecha de la última consulta que tuvo programada el paciente
+	struct tm* timeinfo;
+	time(&actual);
+	timeinfo = localtime(&actual);
+	tm hoy = asctime(timeinfo));    //es la fecha y hora actual 
+	time_t x = mktime(&hoy);     //el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
 	time_t y = mktime(&actual);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
 	double diferencia = 0;
 	if (x != (time_t)(-1) && y != (time_t)(-1))
