@@ -9,8 +9,15 @@ using namespace std;
 
 int main() 
 {
-    Paciente aux;
-    leer_archivo(Paciente, Archivados, Recuperables, aux)
+    int* puntero;
+    int p = 0;
+    puntero = &p;
+
+    int* puntero2;
+    int p2 = 0;
+    puntero2 = &p2;
+
+    archivados("Consultas.csv","Pacientes.csv",puntero,puntero2);
 
     
 }

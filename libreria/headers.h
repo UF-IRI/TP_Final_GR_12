@@ -28,10 +28,10 @@ struct Paciente
 	unsigned int DNI;
 	string Nombre;
 	string Apellido;
-	string Genero;
+	char Sexo;
 	time_t nacimiento;
 	string estado;
-	unsigned int id_os;
+	string id_os;
 };
 
 struct medicos

@@ -22,11 +22,11 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 		double diffecha = distanciafechas(aux);
 
 		if (diffecha>=3625.25 && aux.presento == 0) {	//funcion mas de 10 anios
-			fp << aux2.[j]DNI << ",";
+			fp << aux2[j].DNI << ",";
 			for (i = j; i < *tamactual2; i++) {
 				for (k = 0; k < *tamactual; k++) {
-					if (aux2.[i]DNI == aux.[k]DNI) {
-						fp << aux.[k]Nombre << "," << aux.[k]Apellido << "," << aux.[k]Sexo << "," << aux.[k]Estado << "," << aux.[k]id_os << endl;
+					if (aux2[i].DNI == aux[k].DNI) {
+						fp << aux[k].nombre << "," << aux[k].Apellido << "," << aux[k].Sexo << "," << aux.[k]Estado << "," << aux.[k]id_os << endl;
 					}
 					else {
 						continue;
@@ -43,57 +43,34 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 //hay que cambiar el leer paciente
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
-	Paciente aux1;
-	Contacto aux2;
-	Ultima_consulta aux3;
-	string encabezados;
-	char coma = ',';
-	unsigned int dniaux;
+	ifstream fp;
+	int i = 0, j = 0;
 
-	fstream fp, fp2, fp3;
-	fp.open("Paciente", ios::in);
-	fp2.open("Contacto", ios::in);
-	fp3.open("Ultima_Consulta", ios::in);
-	if (!(fp.is_open() && fp2.is_open() && fp3.is_open()))
-	{
-		return nullptr;  //retorna el puntero nulo
-	}
-	fp >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados; // DNI, Nombre, Apellido, genero, nacimiento, id_os
-
-	fp2 >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados; // id, telefono, celular, direccion, mail
-
-	fp3 >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados; //dni, fecha, asistencia, id_medico
-
-	while (fp)
-	{
-		fp >> aux1.DNI >> coma >> aux1.Nombre >> coma >> aux1.Apellido >> coma >> aux1.Genero >> coma >> aux1.nacimiento >> coma >> aux1.id_os;
-		while (fp2)
+	char coma;
+	string header;
+	fp.open("Pacientes.csv", ios::in);
+	if (!(fp.is_open()))
+		return nullptr;
+	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
+	while (fp) {
+		*tamactual = *tamactual + 1;
+		Paciente* pac = new Paciente[*tamactual];
+		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
 		{
-			fp2 >> aux2.DNI>>coma>>aux2.telefono >> coma >> aux2.celular >> coma >> aux2.direccion >> coma >> aux2.mail;
-			while (fp3)
-			{
-				fp3 >> aux3.dni >> coma >> aux3.fechaturno >> coma >> aux3.fechasolicitud >> coma >> aux3.matriculamedica;
-				if (aux1.DNI == aux2.DNI && aux2.DNI == aux3.dni  )
-				{
-
-					break;
-				}
-			}
-			fp3.seekg(fp3.beg);
-			// Volvemos a salter el encabezado de fp3, porque posicionamos el cursor de lectura al inicio del archivo.
-			fp3 >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados;
+			pac[i] = aux[i];
+			i++;
 		}
-		fp2.seekg(fp2.beg);
-		fp2 >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados >> coma >> encabezados;
-
-		fp.close();
-		fp2.close();
-		fp3.close();
+		fp >> aux[j].DNI >> coma >> aux[j].Nombre >> coma >> aux[j].Apellido >> coma >> aux[j].Sexo >> coma >> aux[j].nacimiento >> coma >> aux[j].id_os;
+		j++;
 	}
-
-	return;
+	delete[]aux;
+	aux = pac;
+	delete[]pac;
+	fp.close();
+	return aux;
 }
-Contacto* leer_contactos(Contactos*& aux2, int* tamactual2) {
+
+Contacto* leer_contactos(Contacto aux2, int* tamactual2) {
 	ifstream fp;
 	int i = 0,j=0;
 	
@@ -106,12 +83,12 @@ Contacto* leer_contactos(Contactos*& aux2, int* tamactual2) {
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
 		*tamactual2 = *tamactual2 + 1;
-		Contacto* cont = new cont[*tamactual2];
-		while (i < *tamactual - 1 && *tamactual - 1 != 0) {
+		Contacto* cont = new Contacto[*tamactual2];
+		while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) {
 			cont[i] = aux2[i];
 			i++;
 		}
-		fp >> aux2.[j]DNI >> coma >> aux2.[j]telefono >> coma >> aux2.[j]celular >> coma >> aux2.[j]direccion >> coma >> aux2.[j]mail;
+		fp >> aux2[j].DNI >> coma >> aux2.[j]telefono >> coma >> aux2.[j]celular >> coma >> aux2.[j]direccion >> coma >> aux2.[j]mail;
 		j++;
 	}
 	delete[]aux2;
@@ -132,7 +109,7 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
 		*tamactual3 = *tamactual3 + 1;
-		Ultima_consulta* consul = new consul[*tamactual3];
+		Ultima_consulta* consul = new Ultima_consulta[*tamactual3];
 		while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) {
 			consul[i] = aux3[i];
 			i++;
@@ -252,7 +229,8 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 
 
 void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//fijarse si esta bien
-	{	int i = 0,j=0;
+	{
+		int i = 0,j=0;
 	for (i; i < *tamactual; i++) {
 		for (j; j < *tamactual2; j++) {
 			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido") {
