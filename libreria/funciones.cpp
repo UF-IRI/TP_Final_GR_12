@@ -1,3 +1,5 @@
+
+#include <headers.h>
 using namespace std;
 //paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos, los archivos ya los tenes
 //completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
@@ -6,12 +8,13 @@ using namespace std;
 void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2) {
 	ofstream fp;
 	int i = 0, j = 0, k = 0;
+
 	fp.open("Archivados.csv", ios::out);
 	if (!(fp.is_open()))
 		return;
 	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
 	while (fp) {//no se si esta bien poner esto cuando se crea un archivo
-		if (&& aux.[j]presento == 0) {	//funcion mas de 10 anios
+		if ( && aux.[j]presento == 0) {	//funcion mas de 10 anios
 			fp << aux2.[j]DNI << ",";
 			for (i = j; i < *tamactual2; i++) {
 				for (k = 0; k < *tamactual; k++) {
@@ -33,11 +36,11 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 //hay que cambiar el leer paciente
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
-	Paciente aux;
+	Paciente aux1;
 	Contacto aux2;
 	Ultima_consulta aux3;
 	string encabezados;
-	char coma = ‘, ’;
+	char coma = ',';
 	unsigned int dniaux;
 
 	fstream fp, fp2, fp3;
@@ -56,13 +59,13 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 
 	while (fp)
 	{
-		fp >> aux.DNI >> coma >> aux.Nombre >> coma >> aux.Apellido >> coma >> aux.genero >> coma >> aux.nacimiento >> coma >> aux.id_os;
+		fp >> aux1.DNI >> coma >> aux1.Nombre >> coma >> aux1.Apellido >> coma >> aux1.Genero >> coma >> aux1.nacimiento >> coma >> aux1.id_os;
 		while (fp2)
 		{
-			fp2 >> aux2.id >> coma >> aux2.telefono >> coma >> aux2.celular >> coma >> aux2.direccion >> coma >> aux2.mail;
+			fp2 >> aux2.DNI>>coma>>aux2.telefono >> coma >> aux2.celular >> coma >> aux2.direccion >> coma >> aux2.mail;
 			while (fp3)
 			{
-				fp3 >> aux3.dni >> coma >> aux3.fecha >> coma >> aux3.asistencia >> coma >> aux3.id_medico;
+				fp3 >> aux3.dni >> coma >> aux3.fechaturno >> coma >> aux3.fechasolicitud >> coma >> aux3.matriculamedica;
 				if (aux.dni == aux2.id && aux2.id == aux3.dni)
 				{
 
@@ -174,17 +177,12 @@ void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* ta
 
 }
 
-double distanciafechas(Ultima_consulta*&aux2)
+double distanciafechas(Paciente*& aux,Ultima_consulta*&aux2)
 {
-	tm inicio = *aux2.fechaturno;    //es la fecha de la última consulta que tuvo programada el paciente
-	tm actual; 
-	struct tm* timeinfo;
-	time(&actual);
-	timeinfo = localtime(&actual);
-	tm hoy = asctime(timeinfo));   //es la fecha y hora actual 
-
+	tm inicio = aux;    //es la fecha de la última consulta que tuvo programada el paciente
+	tm actual;   //es la fecha y hora actual 
 	time_t x = mktime(&inicio);     //el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
-	time_t y = mktime(&hoy);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
+	time_t y = mktime(&actual);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
 	double diferencia = 0;
 	if (x != (time_t)(-1) && y != (time_t)(-1))
 	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
