@@ -5,16 +5,23 @@ using namespace std;
 //completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
 //hacer el resize en las funciones "leer" para tener la cantidad de registros
 
-void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2) {
+void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2) 
+
+{
 	ofstream fp;
 	int i = 0, j = 0, k = 0;
+
 
 	fp.open("Archivados.csv", ios::out);
 	if (!(fp.is_open()))
 		return;
 	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
+
 	while (fp) {//no se si esta bien poner esto cuando se crea un archivo
-		if ( && aux.[j]presento == 0) {	//funcion mas de 10 anios
+		
+		double diffecha = distanciafechas(aux);
+
+		if (diffecha>=3625.25 && aux.presento == 0) {	//funcion mas de 10 anios
 			fp << aux2.[j]DNI << ",";
 			for (i = j; i < *tamactual2; i++) {
 				for (k = 0; k < *tamactual; k++) {
@@ -66,7 +73,7 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 			while (fp3)
 			{
 				fp3 >> aux3.dni >> coma >> aux3.fechaturno >> coma >> aux3.fechasolicitud >> coma >> aux3.matriculamedica;
-				if (aux.dni == aux2.id && aux2.id == aux3.dni)
+				if (aux1.DNI == aux2.DNI && aux2.DNI == aux3.dni  )
 				{
 
 					break;
@@ -243,24 +250,9 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 	return ctime(&consulta_reprogramada); //la funcion ctiempo(ctime) nos pasa la fecha de la consulta_reprogramada.
 }
 
-void cargar_archivos(Paciente *& aux,Contacto *& aux2,Ultima_consulta *& aux3)//no se que hace esto
-{//aca se tienen que cargar los archivados
-	string encabezado;
-	fstream fp2;
-	fp2.open("archivo", ios::out);
-	fstream fp2;
-	if (!(fp2.is_open()))
-	{
-		return nullptr;  //retornaria el puntero nulo
-	}
-	leer_archivo(encabezado);
-	escribir(archivo, aux2);//cargamos los datos en el archivo
-	fp2.close();
-	return;
-}
 
 void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//fijarse si esta bien
-	int i = 0,j=0;
+	{	int i = 0,j=0;
 	for (i; i < *tamactual; i++) {
 		for (j; j < *tamactual2; j++) {
 			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido") {
