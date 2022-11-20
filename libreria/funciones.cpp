@@ -43,14 +43,12 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 //hay que cambiar el leer paciente
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
-	ifstream fp;
+	
 	int i = 0, j = 0;
 
 	char coma;
 	string header;
-	fp.open("Pacientes.csv", ios::in);
-	if (!(fp.is_open()))
-		return nullptr;
+	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
 	while (fp) {
 		*tamactual = *tamactual + 1;
@@ -63,23 +61,21 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 		fp >> aux[j].DNI >> coma >> aux[j].Nombre >> coma >> aux[j].Apellido >> coma >> aux[j].Sexo >> coma >> aux[j].nacimiento >> coma >> aux[j].id_os;
 		j++;
 	}
-	delete[]aux;
+	
 	aux = pac;
 	delete[]pac;
-	fp.close();
+
 	return aux;
 }
 
 Contacto* leer_contactos(Contacto aux2, int* tamactual2) {
-	ifstream fp;
+
 	int i = 0,j=0;
 	
 
 	char coma;
 	string header;
-	fp.open("Contactos.csv", ios::in);
-	if (!(fp.is_open()))
-		return nullptr;
+	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
 		*tamactual2 = *tamactual2 + 1;
@@ -91,21 +87,19 @@ Contacto* leer_contactos(Contacto aux2, int* tamactual2) {
 		fp >> aux2[j].DNI >> coma >> aux2.[j]telefono >> coma >> aux2.[j]celular >> coma >> aux2.[j]direccion >> coma >> aux2.[j]mail;
 		j++;
 	}
-	delete[]aux2;
+	
 	aux2 = cont;
 	delete[]cont;
-	fp.close();
+	
 	return aux2;
 }
 Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
-	ifstream fp;
+	
 	int i = 0,j=0;
 
 	char coma;
 	string header;
-	fp.open("Consultas.csv", ios::in);
-	if (!(fp.is_open()))
-		return nullptr;
+	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
 	while (fp) {
 		*tamactual3 = *tamactual3 + 1;
@@ -118,21 +112,19 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
 		fp >> aux3.[j]DNI >> coma >> aux3.[j]fechasolicitud >> coma >> aux3.[j]fechaturno >> coma >> aux3.[j]presento >> coma >> aux3.[j]matriculamedica;
 		j++;
 	}
-	delete[]aux3;
+	
 	aux3 = consul;
 	delete[]consul;
-	fp.close();
+	
 	return aux3;
 }
 medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
-	ifstream fp;
+
 	int i = 0,j=0;
 
 	char coma;
 	string header;
-	fp.open("Consultas.csv", ios::in);
-	if (!(fp.is_open()))
-		return nullptr;
+
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
 	while (fp) {
 		*tamactual4 = *tamactual4 + 1;
@@ -144,18 +136,15 @@ medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
 		fp >> aux4.[j]matricula >> coma >> aux4.[j]nombre >> coma >> aux4.[j]apellido >> coma >> aux4.[j]telefono >> coma >> aux4.[j]especialidad>>coma>>aux4.[j]activo;
 		j++;
 	}
-	delete[]aux4;
+
 	aux4 = med;
 	delete[]med;
-	fp.close();
+	
 	return aux3;
 }
 
 void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) {//checkea si esta muerto o internado
-	ofstream fp;
-	fp.open("Recuperables.csv", ios::out);
-	if (!(fp.is_open()))
-		return;
+
 
 
 
@@ -174,39 +163,17 @@ double distanciafechas(Ultima_consulta*&aux2)
 	double diferencia = 0;
 	if (x != (time_t)(-1) && y != (time_t)(-1))
 	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
-		diferencia = difftime(y, x) / (60 * 60 * 24);     //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
+		diferencia = difftime(y, x) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
 	}
+	//funcion bisisesto y dividir para que devuelva anios
 	return diferencia;
 }
-int minrandom() {
+int consrandom(int maximo,int minimo) {
 	srand(time(NULL));
-	int valor = rand % 60;
+	int valor = rand % (maximo-minimo)+minimo;
 	return valor;
 }
-int horaramdom() {
-	int valor;
-	srand(time(NULL));
-	valor = rand() % 24;
-	return valor;
-}
-int diarandom() {
-	srand(time(NULL));
-	int valor;
-	valor = rand() % 31;
-	return valor;
-}
-int mesrandom() {
-	int valor;
-	srand(time(NULL));
-	valor = rand() % 12;
-	return valor;
-}
-int aniorandom() {
-	srand(time(NULL));
-	int valor;
-	valor = (rand() % 3) + 122;
-	return valor;
-}
+
 ctime nuevacons()  //funcion para programar consulta aleatoria
 {
 
@@ -228,7 +195,7 @@ ctime nuevacons()  //funcion para programar consulta aleatoria
 }
 
 
-void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//fijarse si esta bien
+void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//no salida por consola
 	{
 		int i = 0,j=0;
 	for (i; i < *tamactual; i++) {

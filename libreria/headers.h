@@ -48,11 +48,8 @@ Paciente* leer_paciente(Paciente *& aux,int *tamactual);
 Contacto* leer_contactos(Contacto*& aux2, int* tamactual2);
 Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3);
 medicos* leer_medicos(medicos*& aux4, int* tamactual4);
-int minrandom();
-int horaramdom();
-int diarandom();
-int mesrandom();
-int aniorandom();
+int consrandom(int maximo,int minimo);
+
 //void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
 double distanciafechas(Ultima_consulta*&aux2);
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
