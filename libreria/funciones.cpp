@@ -42,7 +42,6 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 //hay que cambiar el leer paciente
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
-	
 	int i = 0, j = 0;
 
 	char coma;
@@ -67,7 +66,7 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 	return aux;
 }
 
-Contacto* leer_contactos(Contacto aux2, int* tamactual2) {
+Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) {
 
 	int i = 0,j=0;
 	
@@ -198,7 +197,7 @@ time_t nuevacons()  //funcion para programar consulta aleatoria
 }
 
 
-void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//no salida por consola
+void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) //no salida por consola
 {
 		int i = 0,j=0;
 	for (i; i < *tamactual; i++) 

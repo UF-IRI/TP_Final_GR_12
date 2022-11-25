@@ -1,4 +1,5 @@
 #include "gmock/gmock.h"
+#include "headers.h"
 
 namespace Casos_Base::tests {//testeo de que se abran bien los archivos
 	TEST(Casos_Base, Test_Caso1) {
