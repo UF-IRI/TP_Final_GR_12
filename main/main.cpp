@@ -13,6 +13,8 @@ int main()
     if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()))
         return 0;
 
+    if (!(is_empty(fp) && is_empty(fp2) && is_empty(fp3) && is_empty(fp4)))
+        return -1;
 
     fp.close();
     fp2.close();

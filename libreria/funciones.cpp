@@ -1,5 +1,4 @@
-
-#include <headers.h>
+#include "headers.h"
 using namespace std;
 //paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos, los archivos ya los tenes
 //completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
@@ -12,7 +11,7 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 	int i = 0, j = 0, k = 0;
 
 
-	fp.open("Archivados.csv", ios::out);
+	fp.open("Archivados.csv", ios::out); 
 	if (!(fp.is_open()))
 		return;
 	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
@@ -21,7 +20,7 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 		
 		double diffecha = distanciafechas(aux);
 
-		if (diffecha>=3625.25 && aux.presento == 0) {	//funcion mas de 10 anios
+		if (diffecha>=3652.5 && aux.presento == 0) {	//funcion mas de 10 anios
 			fp << aux2[j].DNI << ",";
 			for (i = j; i < *tamactual2; i++) {
 				for (k = 0; k < *tamactual; k++) {
@@ -168,43 +167,51 @@ double distanciafechas(Ultima_consulta*&aux2)
 	//funcion bisisesto y dividir para que devuelva anios
 	return diferencia;
 }
-int consrandom(int maximo,int minimo) {
+
+int consrandom(int maximo,int minimo) 
+{
 	srand(time(NULL));
-	int valor = rand % (maximo-minimo)+minimo;
+	int valor = rand() % (maximo - minimo) + minimo;
 	return valor;
 }
 
-ctime nuevacons()  //funcion para programar consulta aleatoria
+time_t nuevacons()  //funcion para programar consulta aleatoria
 {
-
 	int minrand, horarand, diarand, mesrand, aniorand;
-	minrand = consrandom(max, min);
-	horarand = consrandom(max, min); //las horas en la libreria van de 0 a 23
-	diarand = cosnrandom(max, min);
-	do {
-		mesrand = consrandom(max, min);//agregar casos febrero
-		if (mesrand == 2 && diarand == 28)
-			break;//los meses en la libreria van de 0 a 11
-	} while (mesrand == 1 || mesrand == 3 || mesrand == 5 || mesrand == 8 || mesrand == 10 && diarand == 31);
-	aniorand = consrandom(max,min);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
-	
-	tm consulta = { 0, minrand, horarand, diarand, mesrand,aniorand };
-	time_t consulta_reprogramada = mktime(&consulta);
+	minrand = consrandom(59, 0);
+	horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
+	mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
+	aniorand = consrandom(125, 122);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
 
-	return ctime(&consulta_reprogramada); //la funcion ctiempo(ctime) nos pasa la fecha de la consulta_reprogramada.
+	if (bisiestos(aniorand) && mesrand == 1)
+		diarand = consrandom(28, 0);
+
+	if (mesrand == 0 || mesrand == 2 || mesrand == 4 || mesrand == 6 || mesrand == 7 || mesrand == 9 || mesrand == 11)
+		diarand = consrandom(30, 0);
+	else if (mesrand != 1)
+		diarand = consrandom(29, 0);
+	
+	tm consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
+	time_t consulta_reprogramada = (mktime(&consulta))*86400;
+
+	return consulta_reprogramada; //Nos pasa la fecha de la consulta_reprogramada.
 }
 
 
 void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {//no salida por consola
-	{
+{
 		int i = 0,j=0;
-	for (i; i < *tamactual; i++) {
-		for (j; j < *tamactual2; j++) {
-			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido") {
+	for (i; i < *tamactual; i++) 
+	{
+		for (j; j < *tamactual2; j++) 
+		{
+			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido") 
+			{
 				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << "," << aux.[i]is_os << endl;
 				cout << aux2.[j]telefono << "," << aux2.[j]celular << "," << aux2.[j]mail << endl;
 			}
-			else {
+			else 
+			{
 				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << ", no hay contacto registrado" << endl;;
 			}
 		}
@@ -213,5 +220,10 @@ void buscarpac(Paciente*& aux, Contactos*& aux2,int *tamactual,int*tamactual2) {
 	
 }
 
-	
-
+bool bisiestos(int anio)
+{
+	if (fechaturno.tm_year % 4 == 0 && fechaturno.tm_year % 100 != 0)
+		return true;
+	else
+		return false;
+}
