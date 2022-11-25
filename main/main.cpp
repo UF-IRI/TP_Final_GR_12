@@ -13,7 +13,10 @@ int main()
     if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()))
         return 0;
 
-    archivados("Consultas.csv","Pacientes.csv",puntero,puntero2);
 
+    fp.close();
+    fp2.close();
+    fp3.close();
+    fp4.close();
     
 }
