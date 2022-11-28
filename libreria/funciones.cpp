@@ -47,14 +47,15 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
 	int i = 0, j = 0;
 
+	fstream fp;
 	char coma;
 	string header;
 	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
+	Paciente* pac = new Paciente[*tamactual];
 	while (fp) 
 	{
 		*tamactual = *tamactual + 1;
-		Paciente* pac = new Paciente[*tamactual];
 		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
 		{
 			pac[i] = aux[i];
@@ -72,24 +73,23 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 
 Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) 
 {
-
 	int i = 0,j=0;
 	
-
+	fstream fp2;
 	char coma;
 	string header;
 	
-	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
-	while (fp) 
+	fp2 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	Contacto* cont = new Contacto[*tamactual2];
+	while (fp2) 
 	{
 		*tamactual2 = *tamactual2 + 1;
-		Contacto* cont = new Contacto[*tamactual2];
 		while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) 
 		{
 			cont[i] = aux2[i];
 			i++;
 		}
-		fp >> aux2[j].DNI >> coma >> aux2.[j]telefono >> coma >> aux2.[j]celular >> coma >> aux2.[j]direccion >> coma >> aux2.[j]mail;
+		fp2 >> aux2[j].DNI >> coma >> aux2[j].telefono >> coma >> aux2[j].celular >> coma >> aux2[j].direccion >> coma >> aux2[j].mail;
 		j++;
 	}
 	
@@ -100,23 +100,22 @@ Contacto* leer_contactos(Contacto *&aux2, int* tamactual2)
 }
 Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) 
 {
-	
 	int i = 0,j=0;
-
+	fstream fp3;
 	char coma;
 	string header;
 	
-	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
-	while (fp) 
+	fp3 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	Ultima_consulta* consul = new Ultima_consulta[*tamactual3];
+	while (fp3) 
 	{
 		*tamactual3 = *tamactual3 + 1;
-		Ultima_consulta* consul = new Ultima_consulta[*tamactual3];
 		while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) {
 			consul[i] = aux3[i];
 			i++;
 		}
 
-		fp >> aux3.[j]DNI >> coma >> aux3.[j]fechasolicitud >> coma >> aux3.[j]fechaturno >> coma >> aux3.[j]presento >> coma >> aux3.[j]matriculamedica;
+		fp3 >> aux3[j].dni >> coma >> aux3[j].fechasolicitud >> coma >> aux3[j].fechaturno >> coma >> aux3[j].presento >> coma >> aux3[j].matriculamedica;
 		j++;
 	}
 	
@@ -127,30 +126,30 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3)
 }
 medicos* leer_medicos(medicos*& aux4, int* tamactual4) 
 {
-
 	int i = 0,j=0;
 
+	fstream fp4;
 	char coma;
 	string header;
 
-	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
-	while (fp) 
+	fp4 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
+	medicos* med = new medicos[*tamactual4];
+	while (fp4) 
 	{
 		*tamactual4 = *tamactual4 + 1;
-		medicos* med = new medicos[*tamactual4];
-		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
+		while (i < *tamactual4 - 1 && *tamactual4 - 1 != 0) 
 		{
 			med[i] = aux4[i];
 			i++;
 		}
-		fp >> aux4.[j]matricula >> coma >> aux4.[j]nombre >> coma >> aux4.[j]apellido >> coma >> aux4.[j]telefono >> coma >> aux4.[j]especialidad>>coma>>aux4.[j]activo;
+		fp4 >> aux4[j].matricula >> coma >> aux4[j].nombre >> coma >> aux4[j].apellido >> coma >> aux4[j].telefono >> coma >> aux4[j].especialidad>>coma>>aux4[j].activo;
 		j++;
 	}
 
 	aux4 = med;
 	delete[]med;
 	
-	return aux3;
+	return aux4;
 }
 
 void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) 
@@ -183,14 +182,14 @@ void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) /
 	{
 		for (j; j < *tamactual2; j++) 
 		{
-			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido")  
+			if (aux[i].DNI == aux2[j].DNI && aux[i].estado!= "fallecido")  
 			{
-				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << "," << aux.[i]is_os << endl;
-				cout << aux2.[j]telefono << "," << aux2.[j]celular << "," << aux2.[j]mail << endl;
+				cout << aux[i].Nombre << "," << aux[i].Apellido << "," << aux[i].Sexo << "," << aux[i].estado << "," << aux[i].id_os << endl;
+				cout << aux2[j].telefono << "," << aux2[j].celular << "," << aux2[j].mail << endl;
 			}
 			else 
 			{
-				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << ", no hay contacto registrado" << endl;;
+				cout << aux[i].Nombre << "," << aux[i].Apellido << "," << aux[i].Sexo << "," << aux[i].estado << ", no hay contacto registrado" << endl;;
 			}
 		}
 
