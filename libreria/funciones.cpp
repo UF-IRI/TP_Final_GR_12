@@ -14,7 +14,8 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 		return;
 	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
 
-	while (fp) {//no se si esta bien poner esto cuando se crea un archivo
+	while (fp) 
+	{//no se si esta bien poner esto cuando se crea un archivo
 		
 		double diffecha = distanciafechas(aux);
 
