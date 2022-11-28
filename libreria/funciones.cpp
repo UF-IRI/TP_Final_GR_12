@@ -167,36 +167,6 @@ double distanciafechas(Ultima_consulta*&aux2)
 	return diferencia;
 }
 
-int consrandom(int maximo,int minimo) 
-{
-	srand(time(NULL));
-	int valor = rand() % (maximo - minimo) + minimo;
-	return valor;
-}
-
-time_t nuevacons()  //funcion para programar consulta aleatoria
-{
-	int minrand, horarand, diarand, mesrand, aniorand;
-	minrand = consrandom(59, 0);
-	horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
-	mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
-	aniorand = consrandom(125, 122);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
-
-	if (bisiestos(aniorand) && mesrand == 1)
-		diarand = consrandom(28, 0);
-
-	if (mesrand == 0 || mesrand == 2 || mesrand == 4 || mesrand == 6 || mesrand == 7 || mesrand == 9 || mesrand == 11)
-		diarand = consrandom(30, 0);
-	else if (mesrand != 1)
-		diarand = consrandom(29, 0);
-	
-	tm consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
-	time_t consulta_reprogramada = (mktime(&consulta))*86400;
-
-	return consulta_reprogramada; //Nos pasa la fecha de la consulta_reprogramada.
-}
-
-
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) //no salida por consola
 {
 		int i = 0,j=0;
@@ -219,9 +189,43 @@ void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) /
 	
 }
 
+int consrandom(int maximo, int minimo)
+{
+	srand(time(NULL));
+	int valor = rand() % (maximo - minimo) + minimo;
+	return valor;
+}
+
+tm nuevacons()  //funcion para programar consulta aleatoria
+{
+	int minrand, horarand, diarand, mesrand, aniorand;
+	minrand = consrandom(59, 0);
+	horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
+	mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
+	aniorand = consrandom(126, 123);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
+
+	int anio = 0;
+	bool anio_bisiesto = bisiestos(anio);
+
+	if (anio_bisiesto == true && mesrand == 1)
+		diarand = consrandom(29, 1);
+	else
+		diarand = consrandom(28, 1);
+
+	if (mesrand == 0 || mesrand == 2 || mesrand == 4 || mesrand == 6 || mesrand == 7 || mesrand == 9 || mesrand == 11)
+		diarand = consrandom(31, 1);
+	else if (mesrand != 1)
+		diarand = consrandom(30, 1);
+
+	tm consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
+
+	return consulta; //Nos pasa la fecha de la consulta_reprogramada.
+}
+
 bool bisiestos(int anio)
 {
-	if (fechaturno.tm_year % 4 == 0 && fechaturno.tm_year % 100 != 0)
+	Ultima_consulta UltConsul;
+	if ((UltConsul.fechaturno.tm_year % 4) == 0 && (UltConsul.fechaturno.tm_year % 100) != 0)
 		return true;
 	else
 		return false;
