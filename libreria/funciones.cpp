@@ -19,14 +19,19 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 		
 		double diffecha = distanciafechas(aux);
 
-		if (diffecha>=3652.5 && aux.presento == 0) {	//funcion mas de 10 anios
+		if (diffecha>=3652.5 && aux.presento == false) 
+		{	//funcion mas de 10 anios
 			fp << aux2[j].DNI << ",";
-			for (i = j; i < *tamactual2; i++) {
-				for (k = 0; k < *tamactual; k++) {
-					if (aux2[i].DNI == aux[k].DNI) {
-						fp << aux[k].nombre << "," << aux[k].Apellido << "," << aux[k].Sexo << "," << aux.[k]Estado << "," << aux.[k]id_os << endl;
+			for (i = j; i < *tamactual2; i++) 
+			{
+				for (k = 0; k < *tamactual; k++) 
+				{
+					if (aux2[i].DNI == aux[k].dni) 
+					{
+						fp << aux2[k].DNI << aux2[k].Nombre << "," << aux2[k].Apellido << "," << aux2[k].Sexo << "," << aux2[k].estado << "," << aux2[k].id_os << endl;
 					}
-					else {
+					else 
+					{
 						continue;
 					}
 				}
@@ -46,7 +51,8 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 	string header;
 	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
-	while (fp) {
+	while (fp) 
+	{
 		*tamactual = *tamactual + 1;
 		Paciente* pac = new Paciente[*tamactual];
 		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
@@ -64,7 +70,8 @@ Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 	return aux;
 }
 
-Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) {
+Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) 
+{
 
 	int i = 0,j=0;
 	
@@ -73,10 +80,12 @@ Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) {
 	string header;
 	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
-	while (fp) {
+	while (fp) 
+	{
 		*tamactual2 = *tamactual2 + 1;
 		Contacto* cont = new Contacto[*tamactual2];
-		while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) {
+		while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) 
+		{
 			cont[i] = aux2[i];
 			i++;
 		}
@@ -89,7 +98,8 @@ Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) {
 	
 	return aux2;
 }
-Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
+Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) 
+{
 	
 	int i = 0,j=0;
 
@@ -97,7 +107,8 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
 	string header;
 	
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
-	while (fp) {
+	while (fp) 
+	{
 		*tamactual3 = *tamactual3 + 1;
 		Ultima_consulta* consul = new Ultima_consulta[*tamactual3];
 		while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) {
@@ -114,7 +125,8 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) {
 	
 	return aux3;
 }
-medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
+medicos* leer_medicos(medicos*& aux4, int* tamactual4) 
+{
 
 	int i = 0,j=0;
 
@@ -122,10 +134,12 @@ medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
 	string header;
 
 	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
-	while (fp) {
+	while (fp) 
+	{
 		*tamactual4 = *tamactual4 + 1;
 		medicos* med = new medicos[*tamactual4];
-		while (i < *tamactual - 1 && *tamactual - 1 != 0) {
+		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
+		{
 			med[i] = aux4[i];
 			i++;
 		}
