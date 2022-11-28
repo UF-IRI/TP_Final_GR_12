@@ -38,7 +38,6 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 	return;
 }
 
-
 //hay que cambiar el leer paciente
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
@@ -152,16 +151,15 @@ void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* ta
 double distanciafechas(Ultima_consulta *&aux2)
 {
 	tm inicio = aux2.fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
-	time_t timer;   //es la fecha de la última consulta que tuvo programada el paciente
+	time_t timer;   
 	time(&timer);   //usamos el timer para tener la fecha y hora actual 
-	//el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
-	time_t y = mktime(&inicio);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
+	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
+	time_t y = mktime(&inicio);      //además, el mktime lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
 	double diferencia = 0;
 	if (y != (time_t)(-1))
 	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
 		diferencia = difftime(timer, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
 	}
-	//funcion bisisesto y dividir para que devuelva anios
 	return diferencia;
 }
 
@@ -194,19 +192,19 @@ int consrandom(int maximo, int minimo)
 	return valor;
 }
 
-tm nuevacons()  //funcion para programar consulta aleatoria
+tm nuevacons()  //funcion para programar una nueva consulta aleatoria
 {
 	int minrand, horarand, diarand, mesrand, aniorand;
 	minrand = consrandom(59, 0);
 	horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
 	mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
-	aniorand = consrandom(126, 123);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 2 anios
+	aniorand = consrandom(126, 123);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 3 anios
 
 	int anio = 0;
 	bool anio_bisiesto = bisiestos(anio);
 
 	if (anio_bisiesto == true && mesrand == 1)
-		diarand = consrandom(29, 1);
+		diarand = consrandom(29, 1); //los dias del mes van de 0 a 31.
 	else
 		diarand = consrandom(28, 1);
 
@@ -217,7 +215,7 @@ tm nuevacons()  //funcion para programar consulta aleatoria
 
 	tm consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
 
-	return consulta; //Nos pasa la fecha de la consulta_reprogramada.
+	return consulta; //Nos pasa la fecha de la consulta reprogramada.
 }
 
 bool bisiestos(int anio)

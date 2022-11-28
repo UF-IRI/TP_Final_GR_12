@@ -8,7 +8,7 @@ using namespace std;
 struct Ultima_consulta
 {
 	unsigned int dni;
-	tm fechasolicitud;
+	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
 	tm fechaturno;
 	bool presento;
 	string matriculamedica;
