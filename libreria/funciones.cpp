@@ -97,6 +97,7 @@ Contacto* leer_contactos(Contacto *&aux2, int* tamactual2)
 	
 	return aux2;
 }
+
 Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) 
 {
 	int i = 0,j=0;
@@ -123,6 +124,7 @@ Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3)
 	
 	return aux3;
 }
+
 medicos* leer_medicos(medicos*& aux4, int* tamactual4) 
 {
 	int i = 0,j=0;
