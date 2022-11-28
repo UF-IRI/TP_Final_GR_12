@@ -49,11 +49,11 @@ Contacto* leer_contactos(Contacto*& aux2, int* tamactual2);
 Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3);
 medicos* leer_medicos(medicos*& aux4, int* tamactual4);
 //void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
-double distanciafechas(Ultima_consulta*&aux2);
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
 void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2);
 
+double distanciafechas(Ultima_consulta*& aux2);
 int consrandom(int maximo, int minimo);
 tm nuevacons();
 bool bisiestos(int anio);

@@ -141,27 +141,25 @@ medicos* leer_medicos(medicos*& aux4, int* tamactual4) {
 	return aux3;
 }
 
-void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) {//checkea si esta muerto o internado
+void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) 
+{//checkea si esta muerto o internado
 
 
 
 
 }
 
-double distanciafechas(Ultima_consulta*&aux2)
+double distanciafechas(Ultima_consulta *&aux2)
 {
-	tm inicio = *aux2.fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
-	tm actual; //es la fecha de la última consulta que tuvo programada el paciente
-	struct tm* timeinfo;
-	time(&actual);
-	timeinfo = localtime(&actual);
-	tm hoy = asctime(timeinfo));    //es la fecha y hora actual 
-	time_t x = mktime(&hoy);     //el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
-	time_t y = mktime(&actual);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
+	tm inicio = aux2.fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
+	time_t timer;   //es la fecha de la última consulta que tuvo programada el paciente
+	time(&timer);   //usamos el timer para tener la fecha y hora actual 
+	//el cambiartiempo nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
+	time_t y = mktime(&inicio);      //además, el cambiartiempo lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
 	double diferencia = 0;
-	if (x != (time_t)(-1) && y != (time_t)(-1))
+	if (y != (time_t)(-1))
 	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
-		diferencia = difftime(y, x) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
+		diferencia = difftime(timer, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
 	}
 	//funcion bisisesto y dividir para que devuelva anios
 	return diferencia;
