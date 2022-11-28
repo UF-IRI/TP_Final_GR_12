@@ -5,7 +5,6 @@ using namespace std;
 //hacer el resize en las funciones "leer" para tener la cantidad de registros
 
 void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2) 
-
 {
 	ofstream fp;
 	int i = 0, j = 0, k = 0;
@@ -42,7 +41,7 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 	return;
 }
 
-//hay que cambiar el leer paciente
+//hay que cambiar los leer 
 Paciente* leer_paciente(Paciente*& aux,int *tamactual)
 {
 	int i = 0, j = 0;
