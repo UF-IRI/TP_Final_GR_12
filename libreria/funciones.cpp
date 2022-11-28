@@ -10,7 +10,6 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 	ofstream fp;
 	int i = 0, j = 0, k = 0;
 
-
 	fp.open("Archivados.csv", ios::out); 
 	if (!(fp.is_open()))
 		return;
@@ -165,12 +164,12 @@ double distanciafechas(Ultima_consulta *&aux2)
 
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) //no salida por consola
 {
-		int i = 0,j=0;
+	int i = 0,j=0;
 	for (i; i < *tamactual; i++) 
 	{
 		for (j; j < *tamactual2; j++) 
 		{
-			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido") 
+			if (aux.[i]DNI == aux2.[j]DNI && aux.[i]estado!= "fallecido")  
 			{
 				cout << aux.[i]Nombre << "," << aux.[i]Apellido << "," << aux.[i]genero << "," << aux.[i]estado << "," << aux.[i]is_os << endl;
 				cout << aux2.[j]telefono << "," << aux2.[j]celular << "," << aux2.[j]mail << endl;
