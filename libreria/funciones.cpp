@@ -42,116 +42,169 @@ void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tam
 	return;
 }
 
-//hay que cambiar los leer 
-Paciente* leer_paciente(Paciente*& aux,int *tamactual)
+//funciones leer
+bool Leer_Pacientes(Paciente*& aux, ifstream& paco)
 {
-	int i = 0, j = 0;
-
-	fstream fp;
-	char coma;
+	char coma = ' , ';
 	string header;
-	
-	fp >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
-	Paciente* pac = new Paciente[*tamactual];
-	while (fp) 
+	getline(paco, header);
+	int i = 0;
+
+	while (paco)
 	{
-		*tamactual = *tamactual + 1;
-		while (i < *tamactual - 1 && *tamactual - 1 != 0) 
-		{
-			pac[i] = aux[i];
-			i++;
-		}
-		fp >> aux[j].DNI >> coma >> aux[j].Nombre >> coma >> aux[j].Apellido >> coma >> aux[j].Sexo >> coma >> aux[j].nacimiento >> coma >> aux[j].id_os;
-		j++;
+		paco >> aux[i].DNI >> coma;
+		getline(paco, aux[i].Nombre, coma);
+		getline(paco, aux[i].Apellido, coma);
+		paco >> aux[i].Sexo >> coma;
+		paco >> aux[i].nacimiento.tm_mday >> coma;
+		paco >> aux[i].nacimiento.tm_mon >> coma;
+		paco >> aux[i].nacimiento.tm_year >> coma;
+		getline(paco, aux[i].estado, coma);
+		getline(paco, aux[i].id_os, coma);
+		i++;
 	}
-	
+
+	return true;
+}
+
+bool Leer_Contactos(Paciente*& aux, ifstream& contact)
+{
+	char coma = ' , ';
+	string header;
+	getline(contact, header);
+	int i = 0;
+
+	while (contact)
+	{
+		contact >> aux[i].DNI >> coma;
+		getline(contact, aux[i].Nombre, coma);
+		getline(contact, aux[i].Apellido, coma);
+		contact >> aux[i].Sexo >> coma;
+		contact >> aux[i].nacimiento.tm_mday >> coma;
+		contact >> aux[i].nacimiento.tm_mon >> coma;
+		contact >> aux[i].nacimiento.tm_year >> coma;
+		getline(contact, aux[i].estado, coma);
+		getline(contact, aux[i].id_os, coma);
+		i++;
+	}
+
+	return true;
+}
+
+bool Leer_Consultas(Paciente*& aux, ifstream& consul)
+{
+	char coma = ' , ';
+	string header;
+	getline(consul, header);
+	int i = 0;
+
+	while (consul)
+	{
+		consul >> aux[i].DNI >> coma;
+		getline(consul, aux[i].Nombre, coma);
+		getline(consul, aux[i].Apellido, coma);
+		consul >> aux[i].Sexo >> coma;
+		consul >> aux[i].nacimiento.tm_mday >> coma;
+		consul >> aux[i].nacimiento.tm_mon >> coma;
+		consul >> aux[i].nacimiento.tm_year >> coma;
+		getline(consul, aux[i].estado, coma);
+		getline(consul, aux[i].id_os, coma);
+		i++;
+	}
+
+	return true;
+}
+
+bool Leer_Medicos(Paciente*& aux, ifstream& med)
+{
+	char coma = ' , ';
+	string header;
+	getline(med, header);
+	int i = 0;
+
+	while (med)
+	{
+		med >> aux[i].DNI >> coma;
+		getline(med, aux[i].Nombre, coma);
+		getline(med, aux[i].Apellido, coma);
+		med >> aux[i].Sexo >> coma;
+		med >> aux[i].nacimiento.tm_mday >> coma;
+		med >> aux[i].nacimiento.tm_mon >> coma;
+		med >> aux[i].nacimiento.tm_year >> coma;
+		getline(med, aux[i].estado, coma);
+		getline(med, aux[i].id_os, coma);
+		i++;
+	}
+
+	return true;
+}
+//arrancan los resize 
+void resize_paciente(Paciente*& aux,int *tamactual)
+{
+	*tamactual = *tamactual + 1;
+	int i = 0;
+	Paciente* pac = new Paciente[*tamactual];
+
+	while (i < *tamactual - 1 && *tamactual - 1 != 0) 
+	{
+		pac[i] = aux[i];
+		i++;
+	}	
 	aux = pac;
 	delete[]pac;
 
-	return aux;
+	return;
 }
 
-Contacto* leer_contactos(Contacto *&aux2, int* tamactual2) 
+void resize_contactos(Contacto *&aux2, int* tamactual2) 
 {
-	int i = 0,j=0;
-	
-	fstream fp2;
-	char coma;
-	string header;
-	
-	fp2 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	*tamactual2 = *tamactual2 + 1;
+	int i = 0;
 	Contacto* cont = new Contacto[*tamactual2];
-	while (fp2) 
+
+	while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) 
 	{
-		*tamactual2 = *tamactual2 + 1;
-		while (i < *tamactual2 - 1 && *tamactual2 - 1 != 0) 
-		{
-			cont[i] = aux2[i];
-			i++;
-		}
-		fp2 >> aux2[j].DNI >> coma >> aux2[j].telefono >> coma >> aux2[j].celular >> coma >> aux2[j].direccion >> coma >> aux2[j].mail;
-		j++;
+		cont[i] = aux2[i];
+		i++;
 	}
-	
 	aux2 = cont;
 	delete[]cont;
 	
-	return aux2;
+	return;
 }
 
-Ultima_consulta* leer_consultas(Ultima_consulta*& aux3, int* tamactual3) 
+void resize_consultas(Ultima_consulta*& aux3, int* tamactual3) 
 {
-	int i = 0,j=0;
-	fstream fp3;
-	char coma;
-	string header;
-	
-	fp3 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header;
+	*tamactual3 = *tamactual3 + 1;
+	int i = 0;
 	Ultima_consulta* consul = new Ultima_consulta[*tamactual3];
-	while (fp3) 
-	{
-		*tamactual3 = *tamactual3 + 1;
-		while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) {
-			consul[i] = aux3[i];
-			i++;
-		}
 
-		fp3 >> aux3[j].dni >> coma >> aux3[j].fechasolicitud >> coma >> aux3[j].fechaturno >> coma >> aux3[j].presento >> coma >> aux3[j].matriculamedica;
-		j++;
+	while (i < *tamactual3 - 1 && *tamactual3 - 1 != 0) 
+	{
+		consul[i] = aux3[i];
+		i++;
 	}
-	
 	aux3 = consul;
 	delete[]consul;
 	
-	return aux3;
+	return;
 }
 
-medicos* leer_medicos(medicos*& aux4, int* tamactual4) 
+void resize_medicos(medicos*& aux4, int* tamactual4) 
 {
-	int i = 0,j=0;
-
-	fstream fp4;
-	char coma;
-	string header;
-
-	fp4 >> header >> coma >> header >> coma >> header >> coma >> header >> coma >> header>>coma>>header;
+	*tamactual4 = *tamactual4 + 1;
+	int i = 0;
 	medicos* med = new medicos[*tamactual4];
-	while (fp4) 
-	{
-		*tamactual4 = *tamactual4 + 1;
-		while (i < *tamactual4 - 1 && *tamactual4 - 1 != 0) 
-		{
-			med[i] = aux4[i];
-			i++;
-		}
-		fp4 >> aux4[j].matricula >> coma >> aux4[j].nombre >> coma >> aux4[j].apellido >> coma >> aux4[j].telefono >> coma >> aux4[j].especialidad>>coma>>aux4[j].activo;
-		j++;
-	}
 
+	while (i < *tamactual4 - 1 && *tamactual4 - 1 != 0) 
+	{
+		med[i] = aux4[i];
+		i++;
+	}
 	aux4 = med;
 	delete[]med;
 	
-	return aux4;
+	return;
 }
 
 void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) 
