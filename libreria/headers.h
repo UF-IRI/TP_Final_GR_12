@@ -45,9 +45,9 @@ struct medicos
 };
 
 bool Leer_Pacientes(Paciente*& aux, ifstream& paco);
-bool Leer_Contactos(Paciente*& aux, ifstream& contact);
-bool Leer_Consultas(Paciente*& aux, ifstream& consul);
-bool Leer_Medicos(Paciente*& aux, ifstream& med);
+bool Leer_Contactos(Contacto*& aux, ifstream& contact);
+bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul);
+bool Leer_Medicos(medicos*& aux, ifstream& med);
 void resize_paciente(Paciente*& aux, int* tamactual);
 void resize_contactos(Contacto*& aux2, int* tamactual2);
 void resize_consultas(Ultima_consulta*& aux3, int* tamactual3);

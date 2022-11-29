@@ -67,7 +67,7 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& paco)
 	return true;
 }
 
-bool Leer_Contactos(Paciente*& aux, ifstream& contact)
+bool Leer_Contactos(Contacto*& aux, ifstream& contact)
 {
 	char coma = ' , ';
 	string header;
@@ -77,21 +77,17 @@ bool Leer_Contactos(Paciente*& aux, ifstream& contact)
 	while (contact)
 	{
 		contact >> aux[i].DNI >> coma;
-		getline(contact, aux[i].Nombre, coma);
-		getline(contact, aux[i].Apellido, coma);
-		contact >> aux[i].Sexo >> coma;
-		contact >> aux[i].nacimiento.tm_mday >> coma;
-		contact >> aux[i].nacimiento.tm_mon >> coma;
-		contact >> aux[i].nacimiento.tm_year >> coma;
-		getline(contact, aux[i].estado, coma);
-		getline(contact, aux[i].id_os, coma);
+		getline(contact, aux[i].telefono, coma);
+		getline(contact, aux[i].celular, coma);
+		getline(contact, aux[i].direccion, coma);
+		getline(contact, aux[i].mail, coma);
 		i++;
 	}
 
 	return true;
 }
 
-bool Leer_Consultas(Paciente*& aux, ifstream& consul)
+bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul)
 {
 	char coma = ' , ';
 	string header;
@@ -100,22 +96,22 @@ bool Leer_Consultas(Paciente*& aux, ifstream& consul)
 
 	while (consul)
 	{
-		consul >> aux[i].DNI >> coma;
-		getline(consul, aux[i].Nombre, coma);
-		getline(consul, aux[i].Apellido, coma);
-		consul >> aux[i].Sexo >> coma;
-		consul >> aux[i].nacimiento.tm_mday >> coma;
-		consul >> aux[i].nacimiento.tm_mon >> coma;
-		consul >> aux[i].nacimiento.tm_year >> coma;
-		getline(consul, aux[i].estado, coma);
-		getline(consul, aux[i].id_os, coma);
+		consul >> aux[i].dni >> coma;
+		consul >> aux[i].fechasolicitud.tm_mday >> coma;
+		consul >> aux[i].fechasolicitud.tm_mon >> coma;
+		consul >> aux[i].fechasolicitud.tm_year >> coma;
+		consul >> aux[i].fechaturno.tm_mday >> coma;
+		consul >> aux[i].fechaturno.tm_mon >> coma;
+		consul >> aux[i].fechaturno.tm_year >> coma;
+		consul >> aux[i].presento >> coma;
+		getline(consul, aux[i].matriculamedica, coma);
 		i++;
 	}
 
 	return true;
 }
 
-bool Leer_Medicos(Paciente*& aux, ifstream& med)
+bool Leer_Medicos(medicos*& aux, ifstream& med)
 {
 	char coma = ' , ';
 	string header;
@@ -124,15 +120,12 @@ bool Leer_Medicos(Paciente*& aux, ifstream& med)
 
 	while (med)
 	{
-		med >> aux[i].DNI >> coma;
-		getline(med, aux[i].Nombre, coma);
-		getline(med, aux[i].Apellido, coma);
-		med >> aux[i].Sexo >> coma;
-		med >> aux[i].nacimiento.tm_mday >> coma;
-		med >> aux[i].nacimiento.tm_mon >> coma;
-		med >> aux[i].nacimiento.tm_year >> coma;
-		getline(med, aux[i].estado, coma);
-		getline(med, aux[i].id_os, coma);
+		med >> aux[i].matricula >> coma;
+		getline(med, aux[i].nombre, coma);
+		getline(med, aux[i].apellido, coma);
+		getline(med, aux[i].telefono, coma);
+		getline(med, aux[i].especialidad, coma);
+		med >> aux[i].activo >> coma;
 		i++;
 	}
 
