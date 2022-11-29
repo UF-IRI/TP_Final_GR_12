@@ -208,9 +208,10 @@ void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* ta
 
 }
 
-double distanciafechas(Ultima_consulta *&aux2)
+double distanciafechas(Ultima_consulta *&aux2) //cuando la llamemos en el main hay que meterla dentro de un for
 {
-	tm inicio = aux2.fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
+	int i = 0;
+	tm inicio = aux2[i].fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
 	time_t timer;   
 	time(&timer);   //usamos el timer para tener la fecha y hora actual 
 	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
@@ -232,13 +233,9 @@ void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) /
 		{
 			if (aux[i].DNI == aux2[j].DNI && aux[i].estado!= "fallecido")  
 			{
-				cout << aux[i].Nombre << "," << aux[i].Apellido << "," << aux[i].Sexo << "," << aux[i].estado << "," << aux[i].id_os << endl;
-				cout << aux2[j].telefono << "," << aux2[j].celular << "," << aux2[j].mail << endl;
+			
 			}
-			else 
-			{
-				cout << aux[i].Nombre << "," << aux[i].Apellido << "," << aux[i].Sexo << "," << aux[i].estado << ", no hay contacto registrado" << endl;;
-			}
+			
 		}
 
 	}
