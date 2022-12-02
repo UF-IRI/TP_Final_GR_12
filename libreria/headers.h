@@ -44,14 +44,14 @@ struct medicos
 	bool activo;
 };
 
-bool Leer_Pacientes(Paciente*& aux, ifstream& paco);
-bool Leer_Contactos(Contacto*& aux, ifstream& contact);
-bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul);
-bool Leer_Medicos(medicos*& aux, ifstream& med);
-void resize_paciente(Paciente*& aux, int* tamactual);
-void resize_contactos(Contacto*& aux2, int* tamactual2);
-void resize_consultas(Ultima_consulta*& aux3, int* tamactual3);
-void resize_medicos(medicos*& aux4, int* tamactual4);
+bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1);
+bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2);
+bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3);
+bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4);
+void resize_paciente(Paciente auxpac, Paciente*& aux, int* tamactual);
+void resize_contactos(Contacto auxcont, Contacto*& aux2, int* tamactual2);
+void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tamactual3);
+void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
 //void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
