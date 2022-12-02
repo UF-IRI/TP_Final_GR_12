@@ -13,7 +13,7 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
 	Paciente auxpac;
 	char coma = ' , ';
 	string header;
-	getline(paco, header);
+	getline(pac, header);
 
 	while (pac)
 	{
