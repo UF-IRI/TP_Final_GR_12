@@ -29,7 +29,7 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
 
 	}
 
-	resize_paciente(auxpac, aux, &tam1);
+	resize_paciente(auxpac, aux, tam1);
 
 	return true;
 }
@@ -53,7 +53,7 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 		getline(contact, auxcont.direccion, coma);
 		getline(contact, auxcont.mail, coma);
 	}
-	resize_contacto(auxcont, aux, &tam2);
+	resize_contactos(auxcont, aux, tam2);
 
 	return true;
 }
@@ -81,7 +81,7 @@ bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3)
 		getline(consul, auxconsul.matriculamedica, coma);
 	
 	}
-	resize_consultas(auxconsul, aux, &tam3);
+	resize_consultas(auxconsul, aux, tam3);
 	return true;
 }
 
@@ -105,7 +105,7 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 		med >> auxmed.activo >> coma;
 	}
 
-	resize_medicos(auxmed, aux, &tam4);
+	resize_medicos(auxmed, aux, tam4);
 	return true;
 }
 //arrancan los resize 
@@ -175,12 +175,16 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 		med[i] = aux4[i];
 		i++;
 	}
-	med[*tamactual - 1] = auxmed;
+	med[*tamactual4 - 1] = auxmed;
 	delete[]aux4;
 	aux4 = med;
 
 	return;
 }
+
+
+
+
 
 void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2)
 {
