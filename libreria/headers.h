@@ -48,15 +48,19 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1);
 bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2);
 bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3);
 bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4);
+
 void resize_paciente(Paciente auxpac, Paciente*& aux, int* tamactual);
 void resize_contactos(Contacto auxcont, Contacto*& aux2, int* tamactual2);
 void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tamactual3);
 void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
-//void cargar_archivos(string Pacientes, string Contactos, string Consultas, string Medicos, string ObraSocial);
-//bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
-void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
-void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2);
 
+void division_grupos(ifstream& pac,ifstream& consul);//divido en recuperados y en archivados
+
+void cargar_archivos();
+
+//bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
+
+void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
 double distanciafechas(Ultima_consulta*& aux2);
 int consrandom(int maximo, int minimo);
 tm nuevacons();

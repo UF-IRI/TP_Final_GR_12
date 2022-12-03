@@ -182,57 +182,7 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 	return;
 }
 
-
-
-
-
-void archivados(Ultima_consulta*& aux, Paciente*& aux2, int* tamactual, int* tamactual2)
-{
-	ofstream fp;
-	int i = 0, j = 0, k = 0;
-
-	fp.open("Archivados.csv", ios::out);
-	if (!(fp.is_open()))
-		return;
-	fp << "DNI,Nombre,Apellido,Sexo,Estado,ObraSocial" << endl;
-
-	while (fp)
-	{//no se si esta bien poner esto cuando se crea un archivo
-
-		double diffecha = distanciafechas(aux);
-
-		if (diffecha >= 3652.5 && aux.presento == false)
-		{	//funcion mas de 10 anios
-			fp << aux2[j].DNI << ",";
-			for (i = j; i < *tamactual2; i++)
-			{
-				for (k = 0; k < *tamactual; k++)
-				{
-					if (aux2[i].DNI == aux[k].dni)
-					{
-						fp << aux2[k].DNI << aux2[k].Nombre << "," << aux2[k].Apellido << "," << aux2[k].Sexo << "," << aux2[k].estado << "," << aux2[k].id_os << endl;
-					}
-					else
-					{
-						continue;
-					}
-				}
-			}
-		}j++;
-	}
-	fp.close();
-	return;
-}
-
-//funciones leer
-
-void retornables(Paciente*& aux, int* tamactual, Ultima_consulta*& aux3, int* tamactual3, medicos*& aux4, int* tamactual4) 
-{//checkea si esta muerto o internado
-
-
-
-
-}
+//Ahora creamos funcion para dividir en grupos segun lo buscado, y crear los archivos.
 
 double distanciafechas(Ultima_consulta *&aux2) //cuando la llamemos en el main hay que meterla dentro de un for
 {
@@ -267,6 +217,7 @@ void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) /
 	}
 	
 }
+
 
 int consrandom(int maximo, int minimo)
 {
