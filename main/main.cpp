@@ -16,9 +16,8 @@ int main()
    
     if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()&& fp5.is_open()&&fp6.is_open()))
         return 0;
-    fp6 << "Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
     fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
-
+    fp6 << "Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
    //chckear si archivos son nulos
 
     int tamact1 = 0;
@@ -32,7 +31,6 @@ int main()
     int tamact3 = 0;
     Ultima_consulta* aux3 = new Ultima_consulta[tamact3];
     bool leerultcons = Leer_Consultas(aux3, fp3, &tamact3);
-
 
     int tamact4 = 0;
     medicos* aux4 = new medicos[tamact4];

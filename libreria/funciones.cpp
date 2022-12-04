@@ -194,6 +194,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
 		return false;
+
 	int i = 0,j=0,pospac;
 
 
@@ -217,20 +218,18 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		}
 	}
 
-
-
-
-}
 void cargararchivados(Paciente aux, fstream& fp) {
 
 	fp << aux.DNI << "," << aux.nombre << "," << aux.apellido << "," << aux.Sexo << aux.natalicio << "," << aux.estado << "," << aux.id_os;
 	return;
 }
+
 void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
 	fp << aux.nombre << "," << aux.apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 	return;
 
 }
+
 int buscar(Paciente*& aux,int *tam1, unsigned int dni) {
 	int i = 0;
 	for (i = 0; i < *tam1; i++) {
@@ -260,24 +259,6 @@ bool distanciafechas(Ultima_consulta *&aux2, int npaciente ) //cuando la llamemo
 		return false;
 	
 }
-
-/**void buscarpac(Paciente*& aux, Contacto*& aux2, int* tamactual, int* tamactual2) //no salida por consola
-{
-	int i = 0,j=0;
-	for (i; i < *tamactual; i++) 
-	{
-		for (j; j < *tamactual2; j++) 
-		{
-			if (aux[i].DNI == aux2[j].DNI && aux[i].estado!= "fallecido")  
-			{
-			
-			}
-			
-		}
-
-	}
-	
-}*/
 
 
 int consrandom(int maximo, int minimo)
