@@ -27,9 +27,10 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
 		getline(pac, auxpac.estado, coma);
 		getline(pac, auxpac.id_os, coma);
 
+		resize_paciente(auxpac, aux, tam1);
+
 	}
 
-	resize_paciente(auxpac, aux, tam1);
 
 	return true;
 }
@@ -52,8 +53,10 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 		getline(contact, auxcont.celular, coma);
 		getline(contact, auxcont.direccion, coma);
 		getline(contact, auxcont.mail, coma);
+	
+		resize_contactos(auxcont, aux, tam2);
 	}
-	resize_contactos(auxcont, aux, tam2);
+
 
 	return true;
 }
@@ -80,8 +83,9 @@ bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3)
 		consul >> auxconsul.presento >> coma;
 		getline(consul, auxconsul.matriculamedica, coma);
 	
+		resize_consultas(auxconsul, aux, tam3);
 	}
-	resize_consultas(auxconsul, aux, tam3);
+
 	return true;
 }
 
@@ -103,9 +107,11 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 		getline(med, auxmed.telefono, coma);
 		getline(med, auxmed.especialidad, coma);
 		med >> auxmed.activo >> coma;
+
+		resize_medicos(auxmed, aux, tam4);
 	}
 
-	resize_medicos(auxmed, aux, tam4);
+
 	return true;
 }
 //arrancan los resize 
@@ -183,6 +189,15 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 }
 
 //Ahora creamos funcion para dividir en grupos segun lo buscado, y crear los archivos.
+bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2)
+{
+	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
+		return false;
+
+
+
+
+}
 
 double distanciafechas(Ultima_consulta *&aux2) //cuando la llamemos en el main hay que meterla dentro de un for
 {

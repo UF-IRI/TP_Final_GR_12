@@ -33,6 +33,7 @@ int main()
     medicos* aux4 = new medicos[tamact4];
     bool leermed = Leer_Medicos(aux4, fp4, &tamact4);
 
+    bool divgrupo = division_grupos(aux1,&tamact1,aux3,&tamact3);
 
     fp.close();
     fp2.close();

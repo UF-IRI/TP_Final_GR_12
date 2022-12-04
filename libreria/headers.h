@@ -54,7 +54,7 @@ void resize_contactos(Contacto auxcont, Contacto*& aux2, int* tamactual2);
 void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tamactual3);
 void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
 
-void division_grupos(ifstream& pac,ifstream& consul);//divido en recuperados y en archivados
+bool division_grupos(Paciente*& aux, int* tam1,Ultima_consulta*& aux2, int* tam2);//divido en recuperados y en archivados
 
 void cargar_archivos();
 
