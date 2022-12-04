@@ -5,16 +5,21 @@ using namespace std;
 int main() 
 {
     ifstream fp, fp2, fp3, fp4;
+    fstream fp5, fp6;
     fp.open("Consultas.csv", ios::in);
     fp2.open("Contactos.csv", ios::in);
     fp3.open("Pacientes.csv", ios::in);
     fp4.open("Medicos.csv", ios::in);
+    fp5.open("Archivados.csv", ios::out);
+    fp6.open("Recuperables.csv", ios::out);
 
-    if (!(fp.is_open() || fp2.is_open() || fp3.is_open() || fp4.is_open()))
+   
+    if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()&& fp5.is_open()&&fp6.is_open()))
         return 0;
+    fp6 << "Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
+    fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
 
-    if (!(is_empty(fp) || is_empty(fp2) || is_empty(fp3) || is_empty(fp4)))
-        return -1;
+   //chckear si archivos son nulos
 
     int tamact1 = 0;
     Paciente* aux1 = new Paciente[tamact1];
@@ -33,11 +38,14 @@ int main()
     medicos* aux4 = new medicos[tamact4];
     bool leermed = Leer_Medicos(aux4, fp4, &tamact4);
 
-    bool divgrupo = division_grupos(aux1,&tamact1,aux3,&tamact3);
+    bool divgrupo = division_grupos(aux1,&tamact1,aux3,&tamact3,aux2,&tamact2,aux4,&tamact4,fp5,fp6);
 
     fp.close();
     fp2.close();
     fp3.close();
     fp4.close();
+    fp5.close();
+    fp6.close();
+    return 0;
     
 }

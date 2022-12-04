@@ -189,27 +189,57 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 }
 
 //Ahora creamos funcion para dividir en grupos segun lo buscado, y crear los archivos.
-bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4 int *tam4 )
+bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4, int *tam4, fstream &fp,fstream &fp2 )
 {
+
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
 		return false;
-	int i = 0;
+	int i = 0,j=0,pospac;
 
-	for (i = 0; i < *tam2; i++)
+
+	for (i = 0; i < *tam1; i++)
 	{
-		if(aux2[i].)
+		if (aux[i].estado == "fallecido")
+			cargararchivados(aux[i], fp);
+		else {
+			for (j = 0; j < *tam2 << j++) {
 
+				if (aux2[j].presento == 0 && distanciafechas(aux2, j))
+				{
+					pospac = buscar(aux, tam1, Ultima_Consulta[j].dni);
+					cargararchivados(aux[pospac], fp);
+				}
+			}
+		}
 	}
 
 
 
+}
+void cargararchivados(Paciente aux, fstream& fp) {
+
+	fp << aux.DNI << "," << aux.nombre << "," << aux.apellido << "," << aux.Sexo << aux.natalicio << "," << aux.estado << "," << aux.id_os;
+	return;
+}
+void cargarrecuperables(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
+	fp << aux.nombre << "," << aux.apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+	return;
+
+}
+int buscar(Paciente*& aux,int *tam1, unsigned int dni) {
+	int i = 0;
+	for (i = 0; i < *tam1; i++) {
+		if (dni == aux[i].dni)
+			return i;
+	}
+
 
 }
 
-double distanciafechas(Ultima_consulta *&aux2) //cuando la llamemos en el main hay que meterla dentro de un for
+bool distanciafechas(Ultima_consulta *&aux2, int npaciente ) //cuando la llamemos en el main hay que meterla dentro de un for
 {
-	int i = 0;
-	tm inicio = aux2[i].fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
+	bool masdediez;
+	tm inicio = aux2[npaciente].fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
 	time_t timer;   
 	time(&timer);   //usamos el timer para tener la fecha y hora actual 
 	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
@@ -219,10 +249,14 @@ double distanciafechas(Ultima_consulta *&aux2) //cuando la llamemos en el main h
 	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
 		diferencia = difftime(timer, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
 	}
-	return diferencia;
+	if (diferencia / 365.25 > 10)
+		return true;
+	else
+		return false;
+	
 }
 
-void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) //no salida por consola
+/**void buscarpac(Paciente*& aux, Contacto*& aux2, int* tamactual, int* tamactual2) //no salida por consola
 {
 	int i = 0,j=0;
 	for (i; i < *tamactual; i++) 
@@ -238,7 +272,7 @@ void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual, int*tamactual2) /
 
 	}
 	
-}
+}*/
 
 
 int consrandom(int maximo, int minimo)
@@ -282,3 +316,5 @@ bool bisiestos(int anio)
 	else
 		return false;
 }
+
+

@@ -10,7 +10,7 @@ struct Ultima_consulta
 	unsigned int dni;
 	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
 	tm fechaturno;
-	bool presento;
+	int presento;
 	string matriculamedica;
 };
 
@@ -54,14 +54,18 @@ void resize_contactos(Contacto auxcont, Contacto*& aux2, int* tamactual2);
 void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tamactual3);
 void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
 
-bool division_grupos(Paciente*& aux, int* tam1,Ultima_consulta*& aux2, int* tam2);//divido en recuperados y en archivados
+bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2, Contacto*& aux3, int* tam3, medicos*& aux4, int* tam4,fstream &fp,fstream &fp2);
+void cargararchivados(Paciente aux, fstream& fp);
+void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp);
+int buscar(Paciente*& aux, int* tam, unsigned int dni);
 
-void cargar_archivos();
 
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
-double distanciafechas(Ultima_consulta*& aux2);
+bool distanciafechas(Ultima_consulta*& aux2, int numero);
+bool bisiestos(int anio);
 int consrandom(int maximo, int minimo);
 tm nuevacons();
-bool bisiestos(int anio);
+
+
