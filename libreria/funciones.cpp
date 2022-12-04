@@ -189,10 +189,17 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 }
 
 //Ahora creamos funcion para dividir en grupos segun lo buscado, y crear los archivos.
-bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2)
+bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4 int *tam4 )
 {
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
 		return false;
+	int i = 0;
+
+	for (i = 0; i < *tam2; i++)
+	{
+		if(aux2[i].)
+
+	}
 
 
 
