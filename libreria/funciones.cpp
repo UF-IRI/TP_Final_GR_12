@@ -201,7 +201,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 	{
 		if (aux[i].estado == "fallecido")
 			cargararchivados(aux[i], fp);
-		else {
+		else  {
 			for (j = 0; j < *tam2 << j++) {
 
 				if (aux2[j].presento == 0 && distanciafechas(aux2, j))
@@ -209,9 +209,14 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 					pospac = buscar(aux, tam1, Ultima_Consulta[j].dni);
 					cargararchivados(aux[pospac], fp);
 				}
+				else//hacer buscar con dni medico y conatcto
+					cargarrecup(aux[i],)
 			}
 		}
+	
+		}
 	}
+
 
 
 
@@ -221,7 +226,7 @@ void cargararchivados(Paciente aux, fstream& fp) {
 	fp << aux.DNI << "," << aux.nombre << "," << aux.apellido << "," << aux.Sexo << aux.natalicio << "," << aux.estado << "," << aux.id_os;
 	return;
 }
-void cargarrecuperables(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
+void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
 	fp << aux.nombre << "," << aux.apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 	return;
 
