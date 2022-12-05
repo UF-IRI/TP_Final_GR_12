@@ -63,7 +63,9 @@ int buscar(Paciente*& aux, int* tam, unsigned int dni);
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 
 void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
-bool distanciafechas(Ultima_consulta*& aux2, int numero);
+bool distanciafechas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
+tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
+int CantConsultas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
 bool bisiestos(int anio);
 int consrandom(int maximo, int minimo);
 tm nuevacons();

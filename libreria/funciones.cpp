@@ -205,7 +205,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		else  {
 			for (j = 0; j < *tam2; j++) {
 
-				if (aux2[j].presento == 0 && distanciafechas(aux2, j))
+				if (aux2[j].presento == 0 && distanciafechas(aux2, j, aux, tam2))
 				{
 					pospac = buscar(aux, tam1, aux2[j].dni);
 					cargararchivados(aux[pospac], fp);
@@ -241,12 +241,10 @@ int buscar(Paciente*& aux,int *tam1, unsigned int dni) {
 
 }
 
-bool distanciafechas(Ultima_consulta *&aux2, int npaciente )//cuando la llamemos en el main hay que meterla dentro de un for
+bool distanciafechas(Ultima_consulta *&aux2, int pospaciente, Paciente*& aux, int *tam2)//cuando la llamemos en el main hay que meterla dentro de un for
 {
-
-
 	bool masdediez;
-	tm inicio = ultcons(aux2,npaciente); //es la fecha de la última consulta que tuvo programada el paciente
+	tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
 	time_t timer;   
 	time(&timer);   //usamos el timer para tener la fecha y hora actual 
 	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
@@ -263,6 +261,38 @@ bool distanciafechas(Ultima_consulta *&aux2, int npaciente )//cuando la llamemos
 	
 }
 
+tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+{
+	tm consulta;
+	time_t timer;
+	time(&timer);
+	time_t consultita;
+	double diff = 0;
+	int cantcon = CantConsultas(aux2, pospaciente, aux, tam2);
+	int i = 0;
+	
+	while()
+	{
+
+		if (consultita != (time_t)(-1))
+		{
+			diff = difftime(timer, consultita) / (86400);
+		}
+	}
+}
+
+int CantConsultas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+{
+	int i = 0, cont = 0;
+	for (i=0; i < *tam2; i++)
+	{
+		if (aux[i].DNI == aux2[pospaciente].dni)
+		{
+			cont++;
+		}
+	}
+	return cont;
+}
 
 int consrandom(int maximo, int minimo)
 {
