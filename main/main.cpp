@@ -6,9 +6,9 @@ int main()
 {
     ifstream fp, fp2, fp3, fp4;
     fstream fp5, fp6;
-    fp.open("Consultas.csv", ios::in);
+    fp.open("Pacientes.csv", ios::in);
     fp2.open("Contactos.csv", ios::in);
-    fp3.open("Pacientes.csv", ios::in);
+    fp3.open("Consultas.csv", ios::in);
     fp4.open("Medicos.csv", ios::in);
     fp5.open("Archivados.csv", ios::out);
     fp6.open("Recuperables.csv", ios::out);

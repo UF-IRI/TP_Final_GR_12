@@ -203,29 +203,30 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		if (aux[i].estado == "fallecido")
 			cargararchivados(aux[i], fp);
 		else  {
-			for (j = 0; j < *tam2 << j++) {
+			for (j = 0; j < *tam2; j++) {
 
 				if (aux2[j].presento == 0 && distanciafechas(aux2, j))
 				{
-					pospac = buscar(aux, tam1, Ultima_Consulta[j].dni);
+					pospac = buscar(aux, tam1, aux2[j].dni);
 					cargararchivados(aux[pospac], fp);
 				}
 				else//hacer buscar con dni medico y conatcto
-					cargarrecup(aux[i],)
+					
+					cargarrecup(aux[i], );
 			}
 		}
 	
 		}
 	}
 
-void cargararchivados(Paciente aux, fstream& fp) {
-
-	fp << aux.DNI << "," << aux.nombre << "," << aux.apellido << "," << aux.Sexo << aux.natalicio << "," << aux.estado << "," << aux.id_os;
+void cargararchivados(Paciente aux, fstream& fp) 
+{
+	fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
 	return;
 }
 
 void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
-	fp << aux.nombre << "," << aux.apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+	fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 	return;
 
 }
@@ -233,17 +234,19 @@ void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
 int buscar(Paciente*& aux,int *tam1, unsigned int dni) {
 	int i = 0;
 	for (i = 0; i < *tam1; i++) {
-		if (dni == aux[i].dni)
+		if (dni == aux[i].DNI)
 			return i;
 	}
 
 
 }
 
-bool distanciafechas(Ultima_consulta *&aux2, int npaciente ) //cuando la llamemos en el main hay que meterla dentro de un for
+bool distanciafechas(Ultima_consulta *&aux2, int npaciente )//cuando la llamemos en el main hay que meterla dentro de un for
 {
+
+
 	bool masdediez;
-	tm inicio = aux2[npaciente].fechaturno; //es la fecha de la última consulta que tuvo programada el paciente
+	tm inicio = ultcons(aux2,npaciente); //es la fecha de la última consulta que tuvo programada el paciente
 	time_t timer;   
 	time(&timer);   //usamos el timer para tener la fecha y hora actual 
 	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
