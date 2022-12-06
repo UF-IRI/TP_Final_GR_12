@@ -58,6 +58,7 @@ int main()
     fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
 
     fp6 << "DNI,Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
+
     bool divgrupo = division_grupos(aux1, &tamact1, aux3, &tamact3, aux2, &tamact2, aux4, &tamact4, fp5, fp6);
 
     fp6.close();

@@ -248,13 +248,15 @@ int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2
 	
 void cargararchivados(Paciente aux, fstream & fp)
 {
-		fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
+
+		fp << aux.DNI << ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux.Sexo << ',' << aux.nacimiento.tm_mday << ',' << aux.nacimiento.tm_mon << ',' << aux.nacimiento.tm_year << ',' << aux.estado << ',' << aux.id_os<<endl;
 		return;
 }
 
 void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 {
-	fp <<aux.DNI<< "," << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+	
+	fp <<aux.DNI<< ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux3.telefono << ',' << aux3.celular << ',' << aux2.matricula << ',' << aux2.nombre << ',' << aux2.apellido << ',' << aux2.telefono << ',' << aux2.especialidad << ',' << aux2.activo<<endl;
 	return;
 
 }
