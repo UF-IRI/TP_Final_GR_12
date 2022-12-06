@@ -9,7 +9,7 @@ struct Ultima_consulta
 {
 	int dni;
 	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
-	tm fechaturno;
+	tm fechaturno = {0,0,0};
 	bool presento;
 	string matriculamedica;
 };

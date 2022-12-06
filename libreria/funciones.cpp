@@ -459,21 +459,24 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 {
-	tm consulta;
+	tm consulta = { 0, 0, 0, 0, 0, 0 };
+	tm consulta2 = { 0, 0, 0, 0, 0, 0 };
 	time_t timer;
 	time(&timer);
-	time_t consultita;
+	time_t consultita = 0;
 	tm ultconsul = {0, 0, 0, 0, 0, 0};
 	double min = 0;
 	double diff = 0;
 	int i = 0;
 
-	for (i = 0; i < *tam2; i++)
+	do
 	{
 		if (aux[i].DNI == aux2[pospaciente].dni)       //cuando hizo mas de una consulta
 		{                                                // compare cual de todas las consultas es mas cercana a la facha de hoy 
 			consulta = aux2[pospaciente].fechaturno;
-			consultita = mktime(&consulta);
+			consulta2 = consulta;
+			consulta2.tm_year = consulta.tm_year -1900;
+			consultita = mktime(&consulta2);
 			if (consultita != (time_t)(-1))
 			{
 				diff = difftime(timer, consultita) / (86400);
@@ -482,13 +485,13 @@ tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 			if (min < diff || i == 0)
 			{
 				min = diff;
-				ultconsul = consulta;
+				ultconsul = consulta2;
 
 			}
 
 		}
-
-	}
+		i++;
+	} while (i < *tam2);
 
 	return ultconsul;
 }
