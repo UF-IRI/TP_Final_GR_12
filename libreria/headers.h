@@ -55,17 +55,18 @@ void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tama
 void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
 
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2, Contacto*& aux3, int* tam3, medicos*& aux4, int* tam4,fstream &fp,fstream &fp2);
+int buscarpac(Paciente*& aux, int* tam, unsigned int dni);
+int buscarcont(Contacto*& aux, int* tam3, unsigned int dni);
+int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam);
 void cargararchivados(Paciente aux, fstream& fp);
 void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp);
-int buscar(Paciente*& aux, int* tam, unsigned int dni);
+
 
 
 //bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
 
-void buscarpac(Paciente*& aux, Contacto*& aux2, int*tamactual,int*tamactual2);
 bool distanciafechas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
-int CantConsultas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
 bool bisiestos(int anio);
 int consrandom(int maximo, int minimo);
 tm nuevacons();

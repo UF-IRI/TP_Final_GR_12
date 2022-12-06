@@ -195,7 +195,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
 		return false;
 
-	int i = 0,j=0,pospac;
+	int i = 0,j=0,pospac,posmed,poscont;
 
 
 	for (i = 0; i < *tam1; i++)
@@ -205,94 +205,128 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		else  {
 			for (j = 0; j < *tam2; j++) {
 
-				if (aux2[j].presento == 0 && distanciafechas(aux2, j, aux, tam2))
+				if (aux2[j].presento == 0 && distanciafechas(aux2, j, aux, tam1))//TAM 1
 				{
-					pospac = buscar(aux, tam1, aux2[j].dni);
+					pospac = buscarpac(aux, tam1, aux2[j].dni);
 					cargararchivados(aux[pospac], fp);
 				}
 				else//hacer buscar con dni medico y conatcto
-					
-					cargarrecup(aux[i], );
+
+					poscont = buscarcont(aux3, tam3, aux[i].DNI);
+					posmed = buscarmed(aux4,tam4,aux2,tam2,aux,i,tam1);
+       		
+					cargarrecup(aux[i],aux4[posmed],aux3[poscont],fp2);
 			}
 		}
 	
 		}
+	return true;
 	}
 
-void cargararchivados(Paciente aux, fstream& fp) 
+int buscarpac(Paciente*& aux, int* tam1, unsigned int dni) 
 {
-	fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
-	return;
-}
-
-void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp) {
-	fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
-	return;
-
-}
-
-int buscar(Paciente*& aux,int *tam1, unsigned int dni) {
 	int i = 0;
 	for (i = 0; i < *tam1; i++) {
 		if (dni == aux[i].DNI)
 			return i;
 	}
-
-
 }
 
-bool distanciafechas(Ultima_consulta *&aux2, int pospaciente, Paciente*& aux, int *tam2)//cuando la llamemos en el main hay que meterla dentro de un for
+int buscarcont(Contacto*& aux, int* tam3, unsigned int dni)
 {
-	bool masdediez;
-	tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
-	time_t timer;   
-	time(&timer);   //usamos el timer para tener la fecha y hora actual 
-	//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
-	time_t y = mktime(&inicio);      //además, el mktime lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
-	double diferencia = 0;
-	if (y != (time_t)(-1))
-	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
-		diferencia = difftime(timer, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
-	}
-	if (diferencia / 365.25 > 10)
-		return true;
-	else
-		return false;
-	
-}
-
-tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
-{
-	tm consulta;
-	time_t timer;
-	time(&timer);
-	time_t consultita;
-	double diff = 0;
-	int cantcon = CantConsultas(aux2, pospaciente, aux, tam2);
 	int i = 0;
-	
-	while()
-	{
-
-		if (consultita != (time_t)(-1))
-		{
-			diff = difftime(timer, consultita) / (86400);
-		}
+	for (i = 0; i < *tam3; i++) {
+		if (dni == aux[i].DNI)
+			return i;
 	}
 }
 
-int CantConsultas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam)
 {
-	int i = 0, cont = 0;
-	for (i=0; i < *tam2; i++)
-	{
-		if (aux[i].DNI == aux2[pospaciente].dni)
+	int i = 0;
+	tm ulti_consul;
+	for (i = 0; i < *tam2; i++) {
+		if (aux[pos].DNI == aux2[i].dni)
 		{
-			cont++;
+			ulti_consul = ultcons(aux2, i, aux, tam);
+
+
+
+
 		}
+
 	}
-	return cont;
 }
+	void cargararchivados(Paciente aux, fstream & fp)
+	{
+		fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
+		return;
+	}
+
+	void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp) {
+		fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+		return;
+
+	}
+
+
+
+	bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
+	{
+		bool masdediez;
+		tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
+		time_t timer;
+		time(&timer);   //usamos el timer para tener la fecha y hora actual 
+		//el mktime nos devuelve la cantidad de segundos a partir de la Época Unix (1 de Enero del 1970 00:00:00) hasta la fecha actual. 
+		time_t y = mktime(&inicio);      //además, el mktime lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
+		double diferencia = 0;
+		if (y != (time_t)(-1))
+		{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
+			diferencia = difftime(timer, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
+		}
+		if (diferencia / 365.25 > 10)
+			return true;
+		else
+			return false;
+
+	}
+
+	tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+	{
+		tm consulta;
+		time_t timer;
+		time(&timer);
+		time_t consultita;
+		tm ultconsul;
+		double min = 0;
+		double diff = 0;
+		int i = 0;
+
+		for (i = 0; i < *tam2; i++)
+		{
+			if (aux[i].DNI == aux2[pospaciente].dni)       //cuando hizo mas de una consulta
+			{                                                // compare cual de todas las consultas es mas cercana a la facha de hoy 
+				consulta = aux2[pospaciente].fechaturno;
+				consultita = mktime(&consulta);
+				if (consultita != (time_t)(-1))
+				{
+					diff = difftime(timer, consultita) / (86400);
+				}
+
+				if (min < diff || i == 0)
+				{
+					min = diff;
+					ultconsul = consulta;
+
+				}
+
+			}
+
+		}
+
+		return ultconsul;
+	}
+
 
 int consrandom(int maximo, int minimo)
 {
