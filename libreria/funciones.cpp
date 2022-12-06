@@ -12,21 +12,21 @@ bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
 		return false;
 
 	Paciente auxpac;
-	char coma = ' , ';
+	char coma = ',';
 	string header;
 	getline(pac, header);
 
 	while (pac)
 	{
 		pac>> auxpac.DNI >> coma;
-		getline(pac, auxpac.Nombre, coma);
-		getline(pac, auxpac.Apellido, coma);
+		getline(pac, auxpac.Nombre, ',');
+		getline(pac, auxpac.Apellido, ',');
 		pac>> auxpac.Sexo >> coma;
 		pac>> auxpac.nacimiento.tm_mday >> coma;
 		pac>> auxpac.nacimiento.tm_mon >> coma;
 		pac>> auxpac.nacimiento.tm_year >> coma;
-		getline(pac, auxpac.estado, coma);
-		getline(pac, auxpac.id_os, coma);
+		getline(pac, auxpac.estado, ',');
+		getline(pac, auxpac.id_os, ',');
 
 		resize_paciente(auxpac, aux, tam1);
 
@@ -40,7 +40,7 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 {
 	if (aux == nullptr||tam2==nullptr)
 		return false;
-	char coma = ' , ';
+	char coma = ',';
 	string header;
 	Contacto auxcont;
 
@@ -50,10 +50,10 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 	while (contact)
 	{
 		contact >> auxcont.DNI >> coma;
-		getline(contact, auxcont.telefono, coma);
-		getline(contact, auxcont.celular, coma);
-		getline(contact, auxcont.direccion, coma);
-		getline(contact, auxcont.mail, coma);
+		getline(contact, auxcont.telefono, ',');
+		getline(contact, auxcont.celular, ',');
+		getline(contact, auxcont.direccion, ',');
+		getline(contact, auxcont.mail, ',');
 	
 		resize_contactos(auxcont, aux, tam2);
 	}
@@ -67,7 +67,7 @@ bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3)
 	if (aux == nullptr||tam3==nullptr)
 		return false;
 
-	char coma = ' , ';
+	char coma = ',';
 	string header;
 	Ultima_consulta auxconsul;
 	getline(consul, header);
@@ -82,7 +82,7 @@ bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3)
 		consul >> auxconsul.fechaturno.tm_mon >> coma;
 		consul >> auxconsul.fechaturno.tm_year >> coma;
 		consul >> auxconsul.presento >> coma;
-		getline(consul, auxconsul.matriculamedica, coma);
+		getline(consul, auxconsul.matriculamedica, ',');
 	
 		resize_consultas(auxconsul, aux, tam3);
 	}
@@ -95,18 +95,18 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 	if (aux == nullptr || tam4 == nullptr)
 		return false;
 
-	char coma = ' , ';
+	char coma = ',';
 	string header;
 	medicos auxmed;
 	getline(med, header);
 	
 	while (med)
 	{
-		getline(med, auxmed.matricula, coma);
-		getline(med, auxmed.nombre, coma);
-		getline(med, auxmed.apellido, coma);
-		getline(med, auxmed.telefono, coma);
-		getline(med, auxmed.especialidad, coma);
+		getline(med, auxmed.matricula, ',');
+		getline(med, auxmed.nombre, ',');
+		getline(med, auxmed.apellido, ',');
+		getline(med, auxmed.telefono, ',');
+		getline(med, auxmed.especialidad, ',');
 		med >> auxmed.activo >> coma;
 
 		resize_medicos(auxmed, aux, tam4);
@@ -296,22 +296,22 @@ bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5)
 		return false;
 
 	Pos_recp  auxposrecp;
-	char coma = ' , ';
+	char coma = ',';
 	string header;
 	getline(recups, header);
 
 	while (recups)
 	{
 		recups >> auxposrecp.DNI >> coma;
-		getline(recups, auxposrecp.nombre, coma);
-		getline(recups, auxposrecp.apellido, coma);
-		getline(recups, auxposrecp.telefono, coma);
-		getline(recups, auxposrecp.celular, coma);
-		getline(recups, auxposrecp.matr_medico, coma);
-		getline(recups, auxposrecp.nombre_med, coma);
-		getline(recups, auxposrecp.apellido_med, coma);
-		getline(recups, auxposrecp.telefono_med, coma);
-		getline(recups, auxposrecp.esp_med, coma);
+		getline(recups, auxposrecp.nombre, ',');
+		getline(recups, auxposrecp.apellido, ',');
+		getline(recups, auxposrecp.telefono, ',');
+		getline(recups, auxposrecp.celular, ',');
+		getline(recups, auxposrecp.matr_medico, ',');
+		getline(recups, auxposrecp.nombre_med, ',');
+		getline(recups, auxposrecp.apellido_med, ',');
+		getline(recups, auxposrecp.telefono_med, ',');
+		getline(recups, auxposrecp.esp_med, ',');
 		recups >> auxposrecp.activo >> coma;
 	
 		resize_pos_recp(auxposrecp, aux5, tam5);
