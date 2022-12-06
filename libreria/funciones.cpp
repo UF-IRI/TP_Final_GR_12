@@ -209,7 +209,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 			for (j = 0; j < *tam2; j++)
 			{
 
-				if (aux2[j].presento == 0 && distanciafechas(aux2, j, aux, tam1))//TAM 1
+				if (aux2[j].presento && distanciafechas(aux2, j, aux, tam1))//TAM 1
 				{
 					pospac = buscarpac(aux, tam1, aux2[j].dni);
 					cargararchivados(aux[pospac], fp);
@@ -278,12 +278,15 @@ void cargararchivados(Paciente aux, fstream & fp)
 		return;
 	}
 
-
-void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp) {
+void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
+{
 		fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 		return;
 
-	}
+}
+
+//SECRETARIA
+bool secretaria_de_pacientes()
 
 
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for

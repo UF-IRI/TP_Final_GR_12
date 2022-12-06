@@ -10,7 +10,7 @@ struct Ultima_consulta
 	unsigned int dni;
 	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
 	tm fechaturno;
-	int presento;
+	bool presento;
 	string matriculamedica;
 };
 
@@ -61,7 +61,7 @@ int buscarcont(Contacto*& aux, int* tam3, unsigned int dni);
 int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam);
 void cargararchivados(Paciente aux, fstream& fp);
 void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp);
-
+//SECRETARIA
 
 
 //FUNCIONES AUXULIARES
