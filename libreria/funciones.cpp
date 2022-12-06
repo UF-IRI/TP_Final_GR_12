@@ -446,5 +446,16 @@ bool bisiestos(int anio)
 
 bool mayorahoy(tm nueva_consulta)
 {
-
+	time_t hoy;
+	time(&hoy);
+	time_t y = mktime(&nueva_consulta);      //además, el mktime lo usamos para no tener que sumarle 1 al mes usando la estructura tm y tampoco hace falta sumarle 1900 al año.
+	double diferencia = 0;
+	if (y != (time_t)(-1))
+	{//ambas fechas pasadas por el mktime deben ser distintas de -1 ya que si son iguales a -1 es porque no se pudo representar la fecha/hora en el calendario.
+		diferencia = difftime(hoy, y) / (86400); //60*60*24    //calculamos y dividimos la diferencia del tiempo que se retorna en segundos por la cantidad de segundos por día.
+	}
+	if (diferencia < 0)
+		return true;
+	else
+		return false;
 }
