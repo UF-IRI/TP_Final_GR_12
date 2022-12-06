@@ -331,8 +331,8 @@ void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
 	return;
 }
 
-
 //FUNCIONES AUXILIARES
+
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
 {
 		tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
@@ -351,7 +351,6 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 			return false;
 
 }
-
 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 	{
@@ -430,5 +429,3 @@ bool bisiestos(int anio)
 	else
 		return false;
 }
-
-
