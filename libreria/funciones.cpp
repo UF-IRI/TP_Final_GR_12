@@ -1,9 +1,8 @@
 #include "headers.h"
 using namespace std;
-//paso punteros de los structs para poder guardarlos xq no se guardan si son estaticos, los archivos ya los tenes
-//completar funciones leer, con un while leyendo archivo cargar datos a los punteros de struct con mem dinamica
-//hacer el resize en las funciones "leer" para tener la cantidad de registros
 
+
+//LECTURA DE ARCHIVOS
 
 bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
 {
@@ -101,7 +100,7 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 	
 	while (med)
 	{
-		med >> auxmed.matricula >> coma;
+		getline(med, auxmed.matricula, coma);
 		getline(med, auxmed.nombre, coma);
 		getline(med, auxmed.apellido, coma);
 		getline(med, auxmed.telefono, coma);
@@ -114,7 +113,9 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 
 	return true;
 }
-//arrancan los resize 
+
+//RESIZE
+
 void resize_paciente(Paciente auxpac,Paciente*& aux,int *tamactual)
 {
 	
@@ -188,7 +189,8 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 	return;
 }
 
-//Ahora creamos funcion para dividir en grupos segun lo buscado, y crear los archivos.
+//DIVISION POR GRUPOS
+
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4, int *tam4, fstream &fp,fstream &fp2 )
 {
 
@@ -202,26 +204,29 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 	{
 		if (aux[i].estado == "fallecido")
 			cargararchivados(aux[i], fp);
-		else  {
-			for (j = 0; j < *tam2; j++) {
+		else
+		{
+			for (j = 0; j < *tam2; j++)
+			{
 
 				if (aux2[j].presento == 0 && distanciafechas(aux2, j, aux, tam1))//TAM 1
 				{
 					pospac = buscarpac(aux, tam1, aux2[j].dni);
 					cargararchivados(aux[pospac], fp);
 				}
-				else//hacer buscar con dni medico y conatcto
-
+				else
+				{
 					poscont = buscarcont(aux3, tam3, aux[i].DNI);
-					posmed = buscarmed(aux4,tam4,aux2,tam2,aux,i,tam1);
-       		
-					cargarrecup(aux[i],aux4[posmed],aux3[poscont],fp2);
+					posmed = buscarmed(aux4, tam4, aux2, tam2, aux, i, tam1);
+					cargarrecup(aux[i], aux4[posmed], aux3[poscont], fp2);
+
+				}
 			}
 		}
 	
-		}
-	return true;
 	}
+	return true;
+}
 
 int buscarpac(Paciente*& aux, int* tam1, unsigned int dni) 
 {
@@ -243,35 +248,45 @@ int buscarcont(Contacto*& aux, int* tam3, unsigned int dni)
 
 int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam)
 {
-	int i = 0;
+	int i = 0,j=0;
 	tm ulti_consul;
-	for (i = 0; i < *tam2; i++) {
+	string matraux;
+
+	for (i = 0; i < *tam2; i++) 
+	{
 		if (aux[pos].DNI == aux2[i].dni)
 		{
 			ulti_consul = ultcons(aux2, i, aux, tam);
 
+			if (ulti_consul.tm_wday == aux2[i].fechaturno.tm_wday && ulti_consul.tm_mon == aux2[i].fechaturno.tm_mon && ulti_consul.tm_year == aux2[i].fechaturno.tm_year)
 
-
+				matraux = aux2[i].matriculamedica;
 
 		}
 
 	}
+	for (j = 0; j < *tamactual4; j++)
+	{
+		if (aux4[j].matricula == matraux)
+			return j;
+	}
 }
-	void cargararchivados(Paciente aux, fstream & fp)
+	
+void cargararchivados(Paciente aux, fstream & fp)
 	{
 		fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
 		return;
 	}
 
-	void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp) {
+
+void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp) {
 		fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 		return;
 
 	}
 
 
-
-	bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
+bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
 	{
 		bool masdediez;
 		tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
@@ -291,7 +306,7 @@ int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2
 
 	}
 
-	tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 	{
 		tm consulta;
 		time_t timer;

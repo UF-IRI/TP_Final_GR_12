@@ -36,7 +36,7 @@ struct Paciente
 
 struct medicos
 {
-	unsigned int matricula;
+	string matricula;
 	string nombre;
 	string apellido;
 	string telefono;
@@ -44,16 +44,17 @@ struct medicos
 	bool activo;
 };
 
+//LECTURA
 bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1);
 bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2);
 bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3);
 bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4);
-
+//RESIZE
 void resize_paciente(Paciente auxpac, Paciente*& aux, int* tamactual);
 void resize_contactos(Contacto auxcont, Contacto*& aux2, int* tamactual2);
 void resize_consultas(Ultima_consulta auccons, Ultima_consulta*& aux3, int* tamactual3);
 void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
-
+//DIVISION POR GRUPOS
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2, Contacto*& aux3, int* tam3, medicos*& aux4, int* tam4,fstream &fp,fstream &fp2);
 int buscarpac(Paciente*& aux, int* tam, unsigned int dni);
 int buscarcont(Contacto*& aux, int* tam3, unsigned int dni);
@@ -63,8 +64,7 @@ void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp);
 
 
 
-//bool secretaria_pacientes(string Recuperables, int codigo, Paciente aux, string obrasocial);
-
+//FUNCIONES AUXULIARES
 bool distanciafechas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);
 bool bisiestos(int anio);
