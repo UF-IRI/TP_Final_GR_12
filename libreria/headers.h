@@ -7,16 +7,16 @@ using namespace std;
 
 struct Ultima_consulta
 {
-	unsigned int dni;
-	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
-	tm fechaturno;
-	bool presento;
+	unsigned int dni{};
+	tm fechasolicitud{};  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
+	tm fechaturno{};
+	bool presento{};
 	string matriculamedica;
 };
 
 struct Contacto
 {
-	unsigned int DNI;
+	unsigned int DNI{};
 	string telefono;
 	string celular;
 	string direccion;
@@ -25,11 +25,11 @@ struct Contacto
 
 struct Paciente
 {
-	unsigned int DNI;
+	unsigned int DNI{};
 	string Nombre;
 	string Apellido;
-	char Sexo;
-	tm nacimiento;
+	char Sexo{};
+	tm nacimiento{};
 	string estado;
 	string id_os;
 };
@@ -41,7 +41,7 @@ struct medicos
 	string apellido;
 	string telefono;
 	string especialidad;
-	bool activo;
+	bool activo{};
 };
 
 //LECTURA
