@@ -192,7 +192,7 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4, int *tam4, fstream &fp,fstream &fp2 )
 {
-	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
+	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr||aux3==nullptr||tam3==nullptr||aux4==nullptr||tam4==nullptr)
 		return false;
 
 	int i = 0,j=0,pospac,posmed,poscont;
@@ -333,9 +333,19 @@ void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
 	return;
 }
 
-void contactar_pac()
+void contactar_pac(Pos_recp pac)
 {
 
+	int llamada = consrandom(1,0);//si devuelve cero no atendio, si devuelve 1 atendio
+
+	if (llamada == 0)
+	{
+		int numero_extra = consrandom(1,0);//cero si no tiene numero extra,1 si tiene 
+	
+		if(numero_extra == 0)//si no tiene numero extra, programo nueva fecha de insistencia
+
+			tm fecha_de_ins
+	}
 }
 //FUNCIONES AUXILIARES
 

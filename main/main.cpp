@@ -49,6 +49,10 @@ int main()
     Pos_recp* aux5 = new Pos_recp[tamact5];
     bool leermed = secretaria_de_pacientes(aux5, fp6, &tamact5);
     
+    for (int i = 0; i < tamact5; i++)
+    {
+        contactar_pac(aux5[i]);
+    }
 
     fp.close();
     fp2.close();
