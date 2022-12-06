@@ -27,7 +27,7 @@ int main()
     int tamact2 = 0;
     Contacto* aux2 = new Contacto[tamact2];
     bool leercontc = Leer_Contactos(aux2, fp2, &tamact2);
-
+    
     int tamact3 = 0;
     Ultima_consulta* aux3 = new Ultima_consulta[tamact3];
     bool leerultcons = Leer_Consultas(aux3, fp3, &tamact3);
@@ -37,6 +37,13 @@ int main()
     bool leermed = Leer_Medicos(aux4, fp4, &tamact4);
 
     bool divgrupo = division_grupos(aux1,&tamact1,aux3,&tamact3,aux2,&tamact2,aux4,&tamact4,fp5,fp6);
+
+    fp6.close();
+
+    fp6.open("Posibles_Recuperables.csv", ios::in);
+
+    if (!(fp6.is_open()))
+        return 0;
 
     int tamact5 = 0;
     Pos_recp* aux5 = new Pos_recp[tamact5];
@@ -48,7 +55,7 @@ int main()
     fp3.close();
     fp4.close();
     fp5.close();
-    fp6.close();
+  
     return 0;
     
 }

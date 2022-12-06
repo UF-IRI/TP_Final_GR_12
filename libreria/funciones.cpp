@@ -290,6 +290,7 @@ bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5)
 {
 	if (aux5 == nullptr || tam5 == nullptr)
 		return false;
+
 	Pos_recp  auxposrecp;
 	char coma = ' , ';
 	string header;
@@ -402,35 +403,48 @@ int consrandom(int maximo, int minimo)
 
 tm nuevacons()  //funcion para programar una nueva consulta aleatoria
 {
-	int minrand, horarand, diarand, mesrand, aniorand;
-	minrand = consrandom(59, 0);
-	horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
-	mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
-	aniorand = consrandom(126, 123);  //sumamos 122 para que sea mayor a 2022 ya que parte del 1900, en un rango de 3 anios
+	tm nueva_consulta;
+	do 
+	{
+		int minrand, horarand, diarand, mesrand, aniorand;
+		minrand = consrandom(59, 0);
+		horarand = consrandom(20, 6); //las horas en la libreria van de 0 a 23
+		mesrand = consrandom(11, 0);  //los meses en la libreria van de 0 a 11
+		aniorand = consrandom(126, 122);  // en un rango de 3 anios
 
-	int anio = 0;
-	bool anio_bisiesto = bisiestos(anio);
+		bool anio_bisiesto = bisiestos(aniorand + 1900);
 
-	if (anio_bisiesto == true && mesrand == 1)
-		diarand = consrandom(29, 1); //los dias del mes van de 0 a 31.
-	else
-		diarand = consrandom(28, 1);
 
-	if (mesrand == 0 || mesrand == 2 || mesrand == 4 || mesrand == 6 || mesrand == 7 || mesrand == 9 || mesrand == 11)
-		diarand = consrandom(31, 1);
-	else if (mesrand != 1)
-		diarand = consrandom(30, 1);
+		if (anio_bisiesto == true && mesrand == 1)
+			diarand = consrandom(29, 1); //los dias del mes van de 0 a 31.
+		else
+			diarand = consrandom(28, 1);
 
-	tm consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
+		if (mesrand == 0 || mesrand == 2 || mesrand == 4 || mesrand == 6 || mesrand == 7 || mesrand == 9 || mesrand == 11)
+			diarand = consrandom(31, 1);
+		else if (mesrand != 1)
+			diarand = consrandom(30, 1);
 
-	return consulta; //Nos pasa la fecha de la consulta reprogramada.
+
+		 nueva_consulta = { 0, minrand, horarand, diarand, mesrand, aniorand };
+
+
+	} while (mayorahoy(nueva_consulta) == false);
+
+	return nueva_consulta; //Nos pasa la fecha de la consulta reprogramada.
+
+
 }
 
 bool bisiestos(int anio)
 {
-	Ultima_consulta UltConsul;
-	if ((UltConsul.fechaturno.tm_year % 4) == 0 && (UltConsul.fechaturno.tm_year % 100) != 0)
+	if ((anio % 4) == 0 && (anio % 100) != 0|| anio % 400 != 0)
 		return true;
 	else
 		return false;
+}
+
+bool mayorahoy(tm nueva_consulta)
+{
+
 }
