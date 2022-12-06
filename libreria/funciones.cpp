@@ -37,7 +37,9 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 
 	while (contact)
 	{
-		contact >> auxcont.DNI >> coma >> auxcont.telefono >> coma >> auxcont.celular >> coma >> auxcont.direccion >> coma >> auxcont.mail;
+		contact >> auxcont.DNI >> coma >> auxcont.telefono >> coma >> auxcont.celular >> coma;
+		getline(contact, auxcont.direccion, ',');
+		contact >> auxcont.mail;
 		resize_contactos(auxcont, aux, tam2);
 	}
 
@@ -176,8 +178,8 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		{
 			for (j = 0; j < *tam2; j++)
 			{
-
-				if (aux2[j].presento && distanciafechas(aux2, j, aux, tam1))//TAM 1
+				bool diffecha = distanciafechas(aux2, j, aux, tam1);
+				if (aux2[j].presento == true && diffecha == true)//TAM 1
 				{
 					pospac = buscarpac(aux, tam1, aux2[j].dni);
 					aux[pospac].estado = "ARCHIVADO";
@@ -455,40 +457,40 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 }
 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
+{
+	tm consulta;
+	time_t timer;
+	time(&timer);
+	time_t consultita;
+	tm ultconsul = {0, 0, 0, 0, 0, 0};
+	double min = 0;
+	double diff = 0;
+	int i = 0;
+
+	for (i = 0; i < *tam2; i++)
 	{
-		tm consulta;
-		time_t timer;
-		time(&timer);
-		time_t consultita;
-		tm ultconsul;
-		double min = 0;
-		double diff = 0;
-		int i = 0;
+		if (aux[i].DNI == aux2[pospaciente].dni)       //cuando hizo mas de una consulta
+		{                                                // compare cual de todas las consultas es mas cercana a la facha de hoy 
+			consulta = aux2[pospaciente].fechaturno;
+			consultita = mktime(&consulta);
+			if (consultita != (time_t)(-1))
+			{
+				diff = difftime(timer, consultita) / (86400);
+			}
 
-		for (i = 0; i < *tam2; i++)
-		{
-			if (aux[i].DNI == aux2[pospaciente].dni)       //cuando hizo mas de una consulta
-			{                                                // compare cual de todas las consultas es mas cercana a la facha de hoy 
-				consulta = aux2[pospaciente].fechaturno;
-				consultita = mktime(&consulta);
-				if (consultita != (time_t)(-1))
-				{
-					diff = difftime(timer, consultita) / (86400);
-				}
-
-				if (min < diff || i == 0)
-				{
-					min = diff;
-					ultconsul = consulta;
-
-				}
+			if (min < diff || i == 0)
+			{
+				min = diff;
+				ultconsul = consulta;
 
 			}
 
 		}
 
-		return ultconsul;
 	}
+
+	return ultconsul;
+}
 
 int consrandom(int maximo, int minimo)
 {

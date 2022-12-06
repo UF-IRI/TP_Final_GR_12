@@ -7,7 +7,7 @@ using namespace std;
 
 struct Ultima_consulta
 {
-	unsigned int dni;
+	int dni;
 	tm fechasolicitud;  //usamos las estrucutras en tm ya que es el tipo d eestructura que usa la libreria ctime.
 	tm fechaturno;
 	bool presento;
@@ -16,7 +16,7 @@ struct Ultima_consulta
 
 struct Contacto
 {
-	unsigned int DNI;
+	int DNI;
 	string telefono;
 	string celular;
 	string direccion;
@@ -25,7 +25,7 @@ struct Contacto
 
 struct Paciente
 {
-	unsigned int DNI;
+	int DNI;
 	string Nombre;
 	string Apellido;
 	char Sexo;
@@ -46,7 +46,7 @@ struct medicos
 
 struct Pos_recp //posibles recuperables,creamos la struct para trabajar mas facilmente con el archivo:Posibles recupeables
 {
-	unsigned int DNI;
+	int DNI;
 	string nombre;
 	string apellido;
 	string telefono;
