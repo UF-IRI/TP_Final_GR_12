@@ -17,7 +17,7 @@ int main()
     if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()&& fp5.is_open()&&fp6.is_open()))
         return 0;
     fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
-    fp6 << "Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
+    fp6 << "DNI,Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
 
 
     int tamact1 = 0;
@@ -49,9 +49,15 @@ int main()
     Pos_recp* aux5 = new Pos_recp[tamact5];
     bool leermed = secretaria_de_pacientes(aux5, fp6, &tamact5);
     
+    tm *nueva_consulta=new tm;
+    string *nueva_obra_social=new string;
+
     for (int i = 0; i < tamact5; i++)
     {
-        contactar_pac(aux5[i]);
+        contactar_pac(aux5[i],fp5,aux1,&tamact1,*nueva_consulta,*nueva_obra_social);
+
+        cout << " La obra social actual del paciente " << aux5[i].nombre << " es: " << nueva_obra_social<<endl;
+        cout << "La nueva fecha de consulta del paciente" << aux5[i].nombre << " es el: " << nueva_consulta.tm_mday<<endl;
     }
 
     fp.close();
@@ -59,7 +65,14 @@ int main()
     fp3.close();
     fp4.close();
     fp5.close();
-  
-    return 0;
+    fp6.close();
+
+    delete[]aux1;
+    delete[]aux2;
+    delete[]aux3;
+    delete[]aux4;
+    delete[]aux5;
+    
+      return 0;
     
 }

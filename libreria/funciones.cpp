@@ -1,6 +1,9 @@
 #include "headers.h"
 using namespace std;
 
+
+
+
 //LECTURA DE ARCHIVOS
 
 bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
@@ -209,6 +212,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 				if (aux2[j].presento && distanciafechas(aux2, j, aux, tam1))//TAM 1
 				{
 					pospac = buscarpac(aux, tam1, aux2[j].dni);
+					aux[pospac].estado = "ARCHIVADO";
 					cargararchivados(aux[pospac], fp);
 				}
 				else
@@ -279,7 +283,7 @@ void cargararchivados(Paciente aux, fstream & fp)
 
 void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 {
-	fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+	fp <<aux.DNI<<"," << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 	return;
 
 }
@@ -298,6 +302,7 @@ bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5)
 
 	while (recups)
 	{
+		recups >> auxposrecp.DNI >> coma;
 		getline(recups, auxposrecp.nombre, coma);
 		getline(recups, auxposrecp.apellido, coma);
 		getline(recups, auxposrecp.telefono, coma);
@@ -333,20 +338,133 @@ void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
 	return;
 }
 
-void contactar_pac(Pos_recp pac)
+void contactar_pac(Pos_recp pac, fstream& arch, Paciente*& aux, int* tam1, tm& nueva_consulta, string& nueva_obra_social)
 {
 
 	int llamada = consrandom(1,0);//si devuelve cero no atendio, si devuelve 1 atendio
-
+	int pospac2 = 0,pospac3=0;
+	int cant_insisitencias = 0;
 	if (llamada == 0)
 	{
-		int numero_extra = consrandom(1,0);//cero si no tiene numero extra,1 si tiene 
-	
-		if(numero_extra == 0)//si no tiene numero extra, programo nueva fecha de insistencia
+		int numero_extra = consrandom(1, 0);//cero si no tiene numero extra,1 si tiene 
 
-			tm fecha_de_ins
+		if (numero_extra == 0)//si no tiene numero extra, programo nueva fecha de insistencia
+		{
+			tm fecha_de_insistencia = nuevacons();//nueva fecha de insistencia
+			cant_insisitencias++;
+			if (cant_insisitencias == 3)
+			{
+				pospac2 = buscarpac2(aux, tam1, pac.DNI);
+				aux[pospac2].estado = "archivado";
+				cargararchivados(aux[pospac2], arch);
+			}
+
+		}
+		else//vendria siendo numero extra =1
+		{
+			//lo llamo
+			int llamada2 = consrandom(1, 0);//1 si atiende,0 si no atiende
+			
+			if (llamada2 == 0)
+			{
+				tm fecha_de_insistencia = nuevacons();//no atendio ni el contacto de emergencia,prograni nueva fecha para insistir.
+				cant_insisitencias++;
+				if (cant_insisitencias == 3)
+				{
+					pospac2 = buscarpac2(aux, tam1, pac.DNI);
+					aux[pospac2].estado = "Archivado";
+					cargararchivados(aux[pospac2], arch);
+				}
+
+			}
+			else////////////////////////////////////
+			{  //atendio por el numero_extra
+				int estado_vital = consrandom(1, 0);  // pregunto si se murio
+
+				if (estado_vital == 0)//si esta muerto
+				{
+					pospac2 = buscarpac2(aux, tam1, pac.DNI);
+					aux[pospac2].estado = "fallecido";
+					cargararchivados(aux[pospac2], arch);
+				}
+				else
+				{
+					int volver = consrandom(1, 0);// 1 si desde volver,0 si no desea volver
+
+					if (volver == 0)
+					{
+						pospac2 = buscarpac2(aux, tam1, pac.DNI);
+						aux[pospac2].estado = "Archivado";
+						cargararchivados(aux[pospac2], arch);
+					}
+					else //desea volver
+					{
+						 nueva_consulta = nuevacons();
+
+						int obrasocial = consrandom(1, 0);//1 si cambio de obra social,0 si no cambio
+						if (obrasocial == 1)
+						{
+							pospac3 = buscarpac2(aux, tam1, pac.DNI);
+							nueva_obra_social = random_obra_social(aux[pospac3].id_os, aux, tam1);
+						}
+						else
+							nueva_obra_social = aux[pospac3].id_os;
+						
+					}
+				}
+			}
+		}
+		
+	}
+	//atendio a la primera
+	else
+	{
+		int estado_vital = consrandom(1, 0);  // pregunto si se murio
+
+		if (estado_vital == 0)//si esta muerto
+		{
+			pospac2 = buscarpac2(aux, tam1, pac.DNI);
+			aux[pospac2].estado = "fallecido";
+			cargararchivados(aux[pospac2], arch);
+		}
+		else
+		{
+			int volver = consrandom(1, 0);// 1 si desde volver,0 si no desea volver
+
+			if (volver == 0)
+			{
+				pospac2 = buscarpac2(aux, tam1, pac.DNI);
+				aux[pospac2].estado = "Archivado";
+				cargararchivados(aux[pospac2], arch);
+			}
+			else //desea volver
+			{
+				nueva_consulta= nuevacons();
+
+				int obrasocial = consrandom(1, 0);//1 si cambio de obra social,0 si no cambio
+				if (obrasocial == 1)
+				{
+					pospac3 = buscarpac2(aux, tam1, pac.DNI);
+				 nueva_obra_social = random_obra_social(aux[pospac3].id_os,aux,tam1);//paso obra social para que no sea igual a la vieja
+				}
+				else
+					nueva_obra_social = aux[pospac3].id_os;
+			}
+		}
+	}
+	return;
+}
+
+int buscarpac2(Paciente*& aux, int* tam1, unsigned int dni)
+{
+	int i = 0;
+	for (i = 0; i < *tam1; i++)
+	{
+		if (dni == aux[i].DNI)
+			return i;
 	}
 }
+
 //FUNCIONES AUXILIARES
 
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
@@ -468,4 +586,18 @@ bool mayorahoy(tm nueva_consulta)
 		return true;
 	else
 		return false;
+}
+
+string random_obra_social(string obra_social, Paciente*& aux, int* tam2)
+{
+	int n = consrandom(10, 0);
+	int i;
+	string nueva_obrasocial;
+	for (i = 0; i < n; i++)
+	{
+		if (obra_social != aux[i].id_os)
+			nueva_obrasocial = aux[i].id_os;
+	}
+
+	return nueva_obrasocial;//devuelve la ultima
 }
