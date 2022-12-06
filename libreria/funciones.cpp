@@ -215,7 +215,7 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 				{
 					poscont = buscarcont(aux3, tam3, aux[i].DNI);
 					posmed = buscarmed(aux4, tam4, aux2, tam2, aux, i, tam1);
-					cargarrecup(aux[i], aux4[posmed], aux3[poscont], fp2);
+					cargar_posibles_recup(aux[i], aux4[posmed], aux3[poscont], fp2);
 
 				}
 			}
@@ -277,7 +277,7 @@ void cargararchivados(Paciente aux, fstream & fp)
 		return;
 }
 
-void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
+void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 {
 	fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
 	return;
@@ -285,15 +285,56 @@ void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 }
 
 //SECRETARIA
-bool secretaria_de_pacientes() 
+bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5)
 {
+	if (aux5 == nullptr || tam5 == nullptr)
+		return false;
+	Pos_recp  auxposrecp;
+	char coma = ' , ';
+	string header;
+	getline(recups, header);
 
+	while (recups)
+	{
+		getline(recups, auxposrecp.nombre, coma);
+		getline(recups, auxposrecp.apellido, coma);
+		getline(recups, auxposrecp.telefono, coma);
+		getline(recups, auxposrecp.celular, coma);
+		getline(recups, auxposrecp.matr_medico, coma);
+		getline(recups, auxposrecp.nombre_med, coma);
+		getline(recups, auxposrecp.apellido_med, coma);
+		getline(recups, auxposrecp.telefono_med, coma);
+		getline(recups, auxposrecp.esp_med, coma);
+		recups >> auxposrecp.activo >> coma;
+	
+		resize_pos_recp(auxposrecp, aux5, tam5);
+	}
+
+	return true;
+}
+
+void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
+{
+	*tam5 = *tam5 + 1;
+	int i = 0;
+	Pos_recp* recp = new Pos_recp[*tam5];
+
+	while (i < *tam5 - 1 && *tam5 - 1 != 0)
+	{
+		recp[i] = aux5[i];
+		i++;
+	}
+	recp[*tam5 - 1] = auxrecup;
+	delete[]aux5;
+	aux5 = recp;
+
+	return;
 }
 
 
+//FUNCIONES AUXILIARES
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
 {
-		bool masdediez;
 		tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
 		time_t timer;
 		time(&timer);   //usamos el timer para tener la fecha y hora actual 
@@ -310,6 +351,7 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 			return false;
 
 }
+
 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 	{

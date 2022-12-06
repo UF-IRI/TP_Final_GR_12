@@ -11,14 +11,14 @@ int main()
     fp3.open("Consultas.csv", ios::in);
     fp4.open("Medicos.csv", ios::in);
     fp5.open("Archivados.csv", ios::out);
-    fp6.open("Recuperables.csv", ios::out);
+    fp6.open("Posibles_Recuperables.csv", ios::out);
 
    
     if (!(fp.is_open() && fp2.is_open() && fp3.is_open() && fp4.is_open()&& fp5.is_open()&&fp6.is_open()))
         return 0;
     fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
     fp6 << "Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
-   //chckear si archivos son nulos
+
 
     int tamact1 = 0;
     Paciente* aux1 = new Paciente[tamact1];
@@ -37,6 +37,11 @@ int main()
     bool leermed = Leer_Medicos(aux4, fp4, &tamact4);
 
     bool divgrupo = division_grupos(aux1,&tamact1,aux3,&tamact3,aux2,&tamact2,aux4,&tamact4,fp5,fp6);
+
+    int tamact5 = 0;
+    Pos_recp* aux5 = new Pos_recp[tamact5];
+    bool leermed = secretaria_de_pacientes(aux5, fp6, &tamact5);
+    
 
     fp.close();
     fp2.close();
