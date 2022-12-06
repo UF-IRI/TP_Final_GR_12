@@ -285,6 +285,7 @@ void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & 
 }
 
 //SECRETARIA
+
 bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5)
 {
 	if (aux5 == nullptr || tam5 == nullptr)
@@ -331,6 +332,10 @@ void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
 	return;
 }
 
+void contactar_pac()
+{
+
+}
 //FUNCIONES AUXILIARES
 
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
