@@ -80,7 +80,7 @@ void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream& f
 //SECRETARIA
 bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5);
 void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5);
-void contactar_pac(Pos_recp pac, fstream& arch, Paciente*& aux, int* tam1,tm& nueva_consulta,string& nueva_obra_social);
+void contactar_pac(Pos_recp pac, fstream& arch, Paciente*& aux, int* tam1, tm& nueva_consulta, string& nueva_obra_social);
 int buscarpac2(Paciente*& aux, int* tam1, unsigned int dni);
 //FUNCIONES AUXULIARES
 bool distanciafechas(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2);

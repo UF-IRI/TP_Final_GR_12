@@ -179,7 +179,8 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 			for (j = 0; j < *tam2; j++)
 			{
 				bool diffecha = distanciafechas(aux2, j, aux, tam1);
-				if (aux2[j].presento == true && diffecha == true)//TAM 1
+				
+				if (aux2[j].presento == true && diffecha == true)
 				{
 					pospac = buscarpac(aux, tam1, aux2[j].dni);
 					aux[pospac].estado = "ARCHIVADO";
