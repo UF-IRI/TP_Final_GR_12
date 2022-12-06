@@ -1,7 +1,6 @@
 #include "headers.h"
 using namespace std;
 
-
 //LECTURA DE ARCHIVOS
 
 bool Leer_Pacientes(Paciente*& aux, ifstream& pac, int* tam1)
@@ -193,12 +192,10 @@ void resize_medicos(medicos auxmed,medicos*& aux4, int* tamactual4)
 
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2,Contacto*& aux3,int*tam3,medicos*&aux4, int *tam4, fstream &fp,fstream &fp2 )
 {
-
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr)
 		return false;
 
 	int i = 0,j=0,pospac,posmed,poscont;
-
 
 	for (i = 0; i < *tam1; i++)
 	{
@@ -231,7 +228,8 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 int buscarpac(Paciente*& aux, int* tam1, unsigned int dni) 
 {
 	int i = 0;
-	for (i = 0; i < *tam1; i++) {
+	for (i = 0; i < *tam1; i++) 
+	{
 		if (dni == aux[i].DNI)
 			return i;
 	}
@@ -240,7 +238,8 @@ int buscarpac(Paciente*& aux, int* tam1, unsigned int dni)
 int buscarcont(Contacto*& aux, int* tam3, unsigned int dni)
 {
 	int i = 0;
-	for (i = 0; i < *tam3; i++) {
+	for (i = 0; i < *tam3; i++) 
+	{
 		if (dni == aux[i].DNI)
 			return i;
 	}
@@ -273,24 +272,27 @@ int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2
 }
 	
 void cargararchivados(Paciente aux, fstream & fp)
-	{
+{
 		fp << aux.DNI << "," << aux.Nombre << "," << aux.Apellido << "," << aux.Sexo << "," << aux.nacimiento.tm_mday << "," << aux.nacimiento.tm_mon << "," << aux.nacimiento.tm_year << "," << aux.estado << "," << aux.id_os;
 		return;
-	}
+}
 
 void cargarrecup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 {
-		fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
-		return;
+	fp << aux.Nombre << "," << aux.Apellido << "," << aux3.telefono << "," << aux3.celular << "," << aux2.matricula << "," << aux2.nombre << "," << aux2.apellido << "," << aux2.telefono << "," << aux2.especialidad << "," << aux2.activo;
+	return;
 
 }
 
 //SECRETARIA
-bool secretaria_de_pacientes()
+bool secretaria_de_pacientes() 
+{
+
+}
 
 
 bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, int* tam2)//cuando la llamemos en el main hay que meterla dentro de un for
-	{
+{
 		bool masdediez;
 		tm inicio = ultcons(aux2, pospaciente, aux, tam2); //es la fecha de la última consulta que tuvo programada el paciente
 		time_t timer;
@@ -307,7 +309,7 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 		else
 			return false;
 
-	}
+}
 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 	{
@@ -344,7 +346,6 @@ tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 
 		return ultconsul;
 	}
-
 
 int consrandom(int maximo, int minimo)
 {
