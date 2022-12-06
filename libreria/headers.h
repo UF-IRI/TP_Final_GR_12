@@ -90,6 +90,3 @@ int consrandom(int maximo, int minimo);
 tm nuevacons();
 bool mayorahoy(tm nueva_consulta);
 string random_obra_social(string obra_social, Paciente*& aux, int* tam2);
-
-
-

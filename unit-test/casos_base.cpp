@@ -3,8 +3,6 @@
 
 using namespace testing;
 
-
-
 //testeo de que se abran bien los archivos
 TEST(Archivos, LeerPac)
 {
