@@ -73,10 +73,11 @@ void resize_medicos(medicos auxmed, medicos*& aux4, int* tamactual4);
 //DIVISION POR GRUPOS
 bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam2, Contacto*& aux3, int* tam3, medicos*& aux4, int* tam4,fstream &fp,fstream &fp2);
 int buscarpac(Paciente*& aux, int* tam, unsigned int dni);
-int buscarcont(Contacto*& aux, int* tam3, unsigned int dni);
-int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam);
+
 void cargararchivados(Paciente aux, fstream& fp);
-void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream& fp);
+string buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente aux, Paciente*& aux3, int* tam);
+
+void cargar_posibles_recup(Pos_recp aux, fstream& fp);
 //SECRETARIA
 bool secretaria_de_pacientes(Pos_recp*& aux5, fstream& recups, int* tam5);
 void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5);

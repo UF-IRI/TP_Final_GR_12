@@ -167,6 +167,11 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 		return false;
 
 	int i = 0,j=0, pospac, posmed = 0, poscont = 0;
+	int n = 0;
+
+	Pos_recp recp;
+
+
 
 	for (i = 0; i < *tam1; i++)
 	{
@@ -186,9 +191,35 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 				}
 				else
 				{
-					poscont = buscarcont(aux3, tam3, aux[i].DNI);
-					posmed = buscarmed(aux4, tam4, aux2, tam2, aux, i, tam1);
-					cargar_posibles_recup(aux[i], aux4[posmed], aux3[poscont], fp2);
+					recp.DNI = aux[i].DNI;
+					recp.nombre = aux[i].Nombre;
+					recp.apellido = aux[i].Apellido;
+					for (i = 0; i < *tam4; i++)       // para copiar los datos del doctor
+					{
+						string idmedico = buscarmed(aux4, tam4, aux2, tam2, aux[i], aux, tam1);
+						if (aux4[i].matricula == idmedico)
+						{
+							recp.matr_medico = aux4[i].matricula;
+							recp.nombre_med = aux4[i].nombre;
+							recp.apellido_med = aux4[i].apellido;
+							recp.telefono_med = aux4[i].telefono;
+							recp.esp_med = aux4[i].especialidad;
+							recp.activo = aux4[i].activo;
+
+						}
+
+					}
+					int j;
+					for (j = 0; j < *tam3; j++)
+					{	// para copiar el telefono
+					{
+						if (aux3[j].DNI == aux[i].DNI)
+							recp.telefono = aux3[i].telefono;
+					}
+				}
+
+
+				    cargar_posibles_recup(recp,fp2);
 
 				}
 			}
@@ -208,27 +239,19 @@ int buscarpac(Paciente*& aux, int* tam1, unsigned int dni)
 	}
 }
 
-int buscarcont(Contacto*& aux, int* tam3, unsigned int dni)
-{
-	int i = 0;
-	for (i = 0; i < *tam3; i++) 
-	{
-		if (dni == aux[i].DNI)
-			return i;
-	}
-}
 
-int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente*& aux, int pos, int* tam)
+
+string buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente aux,Paciente*& aux3,int *tam)
 {
-	int i = 0,j=0;
+	int i = 0, j = 0;
 	tm ulti_consul;
 	string matraux;
 
-	for (i = 0; i < *tam2; i++) 
+	for (i = 0; i < *tam2; i++)
 	{
-		if (aux[pos].DNI == aux2[i].dni)
+		if (aux.DNI == aux2[i].dni)
 		{
-			ulti_consul = ultcons(aux2, i, aux, tam);
+			ulti_consul = ultcons(aux2, i, aux3, tam);
 
 			if (ulti_consul.tm_wday == aux2[i].fechaturno.tm_wday && ulti_consul.tm_mon == aux2[i].fechaturno.tm_mon && ulti_consul.tm_year == aux2[i].fechaturno.tm_year)
 
@@ -237,22 +260,18 @@ int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2
 		}
 
 	}
-	for (j = 0; j < *tamactual4; j++)
-	{
-		if (aux4[j].matricula == matraux)
-			return j;
-	}
+	return matraux;
 }
-	
+
 void cargararchivados(Paciente aux, fstream & fp)
 {
 	fp << aux.DNI << ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux.Sexo << ',' << aux.nacimiento.tm_mday << ',' << aux.nacimiento.tm_mon << ',' << aux.nacimiento.tm_year << ',' << aux.estado << ',' << aux.id_os<<endl;
 	return;
 }
 
-void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
+void cargar_posibles_recup(Pos_recp aux, fstream& fp)
 {
-	fp << aux.DNI<< ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux3.telefono << ',' << aux3.celular << ',' << aux2.matricula << ',' << aux2.nombre << ',' << aux2.apellido << ',' << aux2.telefono << ',' << aux2.especialidad << ',' << aux2.activo << endl;
+	fp << aux.DNI<< ',' << aux.nombre << ',' << aux.apellido << ',' << aux.telefono << ',' << aux.celular << ',' << aux.matr_medico << ',' << aux.nombre_med << ',' << aux.apellido_med << ',' << aux.telefono_med << ',' << aux.esp_med << ',' << aux.activo << endl;
 	return;
 
 }

@@ -74,7 +74,7 @@ int main()
     
     tm *nueva_consulta=new tm;
     string *nueva_obra_social=new string;
-/*
+
     for (int i = 0; i < tamact5; i++)
     {
         contactar_pac(aux5[i],fp5,aux1,&tamact1,*nueva_consulta,*nueva_obra_social);
@@ -82,7 +82,7 @@ int main()
         cout << " La obra social actual del paciente " << aux5[i].nombre <<" es: " << nueva_obra_social<<endl;
         cout << "La nueva fecha de consulta del paciente" << aux5[i].nombre << " es el: " << nueva_consulta.tm_mday<<endl;
     }
-    */
+    
     fp.close();
     fp2.close();
     fp3.close();
