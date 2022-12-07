@@ -59,7 +59,7 @@ bool Leer_Consultas(Ultima_consulta*& aux, ifstream& consul, int* tam3)
 
 	while (consul)
 	{
-		consul >> auxconsul.dni >> coma >> auxconsul.fechasolicitud.tm_mday >> coma >> auxconsul.fechasolicitud.tm_mon >> coma >> auxconsul.fechasolicitud.tm_year >> coma >> auxconsul.fechaturno.tm_mday >> coma >> auxconsul.fechaturno.tm_mon >> coma >> auxconsul.fechaturno.tm_year >> coma >> auxconsul.presento >> coma >> auxconsul.matriculamedica >> coma;
+		consul >> auxconsul.dni >> coma >> auxconsul.fechasolicitud.tm_mday >> coma >> auxconsul.fechasolicitud.tm_mon >> coma >> auxconsul.fechasolicitud.tm_year >> coma >> auxconsul.fechaturno.tm_mday >> coma >> auxconsul.fechaturno.tm_mon >> coma >> auxconsul.fechaturno.tm_year >> coma >> auxconsul.presento >> coma >> auxconsul.matriculamedica;
 		resize_consultas(auxconsul, aux, tam3);
 	}
 
@@ -82,7 +82,6 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 		resize_medicos(auxmed, aux, tam4);
 	}
 
-
 	return true;
 }
 
@@ -90,7 +89,6 @@ bool Leer_Medicos(medicos*& aux, ifstream& med, int* tam4)
 
 void resize_paciente(Paciente auxpac,Paciente*& aux,int *tamactual)
 {
-	
 	*tamactual = *tamactual + 1;
 	int i = 0;
 	Paciente* pac = new Paciente[*tamactual];
@@ -248,15 +246,13 @@ int buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2
 	
 void cargararchivados(Paciente aux, fstream & fp)
 {
-
-		fp << aux.DNI << ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux.Sexo << ',' << aux.nacimiento.tm_mday << ',' << aux.nacimiento.tm_mon << ',' << aux.nacimiento.tm_year << ',' << aux.estado << ',' << aux.id_os<<endl;
-		return;
+	fp << aux.DNI << ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux.Sexo << ',' << aux.nacimiento.tm_mday << ',' << aux.nacimiento.tm_mon << ',' << aux.nacimiento.tm_year << ',' << aux.estado << ',' << aux.id_os<<endl;
+	return;
 }
 
 void cargar_posibles_recup(Paciente aux, medicos aux2, Contacto aux3, fstream & fp)
 {
-	
-	fp <<aux.DNI<< ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux3.telefono << ',' << aux3.celular << ',' << aux2.matricula << ',' << aux2.nombre << ',' << aux2.apellido << ',' << aux2.telefono << ',' << aux2.especialidad << ',' << aux2.activo<<endl;
+	fp << aux.DNI<< ',' << aux.Nombre << ',' << aux.Apellido << ',' << aux3.telefono << ',' << aux3.celular << ',' << aux2.matricula << ',' << aux2.nombre << ',' << aux2.apellido << ',' << aux2.telefono << ',' << aux2.especialidad << ',' << aux2.activo << endl;
 	return;
 
 }
@@ -299,12 +295,12 @@ void resize_pos_recp(Pos_recp auxrecup, Pos_recp*& aux5, int* tam5)
 	int i = 0;
 	Pos_recp* recp = new Pos_recp[*tam5];
 
-	while (i < *tam5 - 1 && *tam5 - 1 != 0)
+	while (i < *tam5 - 1)
 	{
 		recp[i] = aux5[i];
 		i++;
 	}
-	recp[*tam5 - 1] = auxrecup;
+	recp[i] = auxrecup;
 	delete[]aux5;
 	aux5 = recp;
 
@@ -462,7 +458,7 @@ bool distanciafechas(Ultima_consulta * &aux2, int pospaciente, Paciente * &aux, 
 tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 {
 	tm consulta = { 0, 0, 0, 0, 0, 0 };
-	tm consulta2 = { 0, 0, 0, 0, 0, 0 };
+	tm consulta2 = { 0, 0, 0};
 	time_t timer;
 	time(&timer);
 	time_t consultita = 0;
@@ -477,7 +473,7 @@ tm ultcons(Ultima_consulta*& aux2, int pospaciente, Paciente*& aux, int* tam2)
 		{                                                // compare cual de todas las consultas es mas cercana a la facha de hoy 
 			consulta = aux2[pospaciente].fechaturno;
 			consulta2 = consulta;
-			consulta2.tm_year = consulta.tm_year -1900;
+			consulta2.tm_year = (consulta.tm_year)-1900;
 			consultita = mktime(&consulta2);
 			if (consultita != (time_t)(-1))
 			{
