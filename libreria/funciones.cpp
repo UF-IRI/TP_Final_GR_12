@@ -209,6 +209,10 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 							recp.telefono = aux3[k].telefono;
 							break;
 						}
+						else 
+						{
+							recp.telefono = "No tiene tel.";
+						}
 				    }
 				    cargar_posibles_recup(recp,fp2);
 				}
