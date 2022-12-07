@@ -51,3 +51,16 @@ TEST(CasosBase, ResizePaciente)
 
 	delete[] ejemplo;
 }
+TEST(tiempo, distfecha)
+{
+	tm auxiliar;
+	
+	
+	auxiliar.tm_mday =10;
+	auxiliar.tm_mon = 12;
+	auxiliar.tm_year =2024;
+
+	bool cons= mayorahoy(auxiliar);
+
+	EXPECT_TRUE(auxiliar);
+}
