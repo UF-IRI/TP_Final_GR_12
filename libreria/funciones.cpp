@@ -31,9 +31,7 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 	char coma = ',';
 	string header;
 	Contacto auxcont;
-
 	getline(contact, header);
-
 
 	while (contact)
 	{
@@ -42,8 +40,6 @@ bool Leer_Contactos(Contacto*& aux, ifstream& contact, int* tam2)
 		contact >> auxcont.mail;
 		resize_contactos(auxcont, aux, tam2);
 	}
-
-
 	return true;
 }
 
@@ -166,16 +162,14 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 	if (aux == nullptr || tam1 == nullptr || aux2 == nullptr || tam2 == nullptr||aux3==nullptr||tam3==nullptr||aux4==nullptr||tam4==nullptr)
 		return false;
 
-	int i = 0,j=0, pospac, posmed = 0, poscont = 0;
+	int i = 0, j = 0, pospac = 0;
 	int n = 0;
 
 	Pos_recp recp;
 
-
-
 	for (i = 0; i < *tam1; i++)
 	{
-		if (aux[i].estado == "fallecido")
+		if (aux[i].estado == "fallecido" || aux[i].estado == "internado")
 			cargararchivados(aux[i], fp);
 		else
 		{
@@ -194,33 +188,29 @@ bool division_grupos(Paciente*& aux, int* tam1, Ultima_consulta*& aux2, int* tam
 					recp.DNI = aux[i].DNI;
 					recp.nombre = aux[i].Nombre;
 					recp.apellido = aux[i].Apellido;
-					for (i = 0; i < *tam4; i++)       // para copiar los datos del doctor
+					for (int h = 0; h < *tam4; h++)       // para copiar los datos del doctor
 					{
 						string idmedico = buscarmed(aux4, tam4, aux2, tam2, aux[i], aux, tam1);
-						if (aux4[i].matricula == idmedico)
+						if (aux4[h].matricula == idmedico)
 						{
-							recp.matr_medico = aux4[i].matricula;
-							recp.nombre_med = aux4[i].nombre;
-							recp.apellido_med = aux4[i].apellido;
-							recp.telefono_med = aux4[i].telefono;
-							recp.esp_med = aux4[i].especialidad;
-							recp.activo = aux4[i].activo;
-
+							recp.matr_medico = aux4[h].matricula;
+							recp.nombre_med = aux4[h].nombre;
+							recp.apellido_med = aux4[h].apellido;
+							recp.telefono_med = aux4[h].telefono;
+							recp.esp_med = aux4[h].especialidad;
+							recp.activo = aux4[h].activo;
 						}
-
 					}
-					int j;
-					for (j = 0; j < *tam3; j++)
-					{	// para copiar el telefono
+					int k;
+					for (k = 0; k < *tam3; k++)	// para copiar el telefono
 					{
-						if (aux3[j].DNI == aux[i].DNI)
-							recp.telefono = aux3[i].telefono;
-					}
-				}
-
-
+						if (recp.DNI == aux3[k].DNI)
+						{
+							recp.telefono = aux3[k].telefono;
+							break;
+						}
+				    }
 				    cargar_posibles_recup(recp,fp2);
-
 				}
 			}
 		}

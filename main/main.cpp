@@ -55,9 +55,9 @@ int main()
     if (!(fp5.is_open() && fp6.is_open()))
         return 25;
 
-    fp5 << "DNI,Nombre,Apellido,Sexo,Natalicio,Estado,Obra_social";
-
-    fp6 << "DNI,Nombre,Apellido,Telefono,Celular,Matricula,NombreMed,ApellidoMed,TelefonoMed,Especialidad,Activo";
+    char coma = ',';
+    fp5 << "DNI" << coma << "Nombre" << coma << "Apellido" << coma << "Sexo" << coma << "Natalicio" << coma << "Estado" << coma << "Obra social" << endl;
+    fp6 << "DNI" << coma << "Nombre" << coma << "Apellido" << coma << "Telefono" << coma << "Celular" << coma << "Matricula" << coma << "NombreMed" << coma << "ApellidoMed" << coma << "TelefonoMed" << "Especialidad" << coma << "Activo" << endl;
 
     bool divgrupo = division_grupos(aux1, &tamact1, aux3, &tamact3, aux2, &tamact2, aux4, &tamact4, fp5, fp6);
 
@@ -75,13 +75,13 @@ int main()
     tm *nueva_consulta=new tm;
     string *nueva_obra_social=new string;
 
-   /* for (int i = 0; i < tamact5; i++)
-    {
+   for (int i = 0; i < tamact5; i++)
+   {
         contactar_pac(aux5[i],fp5,aux1,&tamact1,*nueva_consulta,*nueva_obra_social);
 
-        cout << " La obra social actual del paciente " << aux5[i].nombre <<" es: " << nueva_obra_social<<endl;
-        cout << "La nueva fecha de consulta del paciente" << aux5[i].nombre << " es el: " << nueva_consulta.tm_mday<<endl;
-    }*/
+        cout << " La obra social actual del paciente " << aux5[i].DNI <<" es: " << nueva_obra_social << endl;
+        cout << "La nueva fecha de consulta del paciente" << aux5[i].DNI << " es el: " << nueva_consulta << endl;
+   }
     
     fp.close();
     fp2.close();
