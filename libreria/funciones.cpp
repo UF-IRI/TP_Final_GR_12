@@ -239,8 +239,6 @@ int buscarpac(Paciente*& aux, int* tam1, unsigned int dni)
 	}
 }
 
-
-
 string buscarmed(medicos*& aux4, int* tamactual4, Ultima_consulta*& aux2, int* tam2, Paciente aux,Paciente*& aux3,int *tam)
 {
 	int i = 0, j = 0;

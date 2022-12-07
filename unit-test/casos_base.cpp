@@ -6,40 +6,48 @@ using namespace testing;
 //testeo de que se abran bien los archivos
 TEST(Archivos, LeerPac)
 {
-	bool siabre = false;
-	bool pruebaleer = false;
-	int n = 0;
-	int* tam1 = &n;
+	int tam1 = 0;
+	Paciente* aux = nullptr;
+	aux = new Paciente[tam1];
 	ifstream pac;
-	Paciente* aux = new Paciente[*tam1];
-	Paciente Pruebapaciente;
-	Pruebapaciente.DNI = 10242587;
-	Pruebapaciente.Nombre = "Heidemaria";
-	Pruebapaciente.Apellido = "Sawyer";
-	Pruebapaciente.Sexo = 'F';
-	Pruebapaciente.nacimiento.tm_mday = 19;
-	Pruebapaciente.nacimiento.tm_mon = 2;
-	Pruebapaciente.nacimiento.tm_year = 1988;
-	Pruebapaciente.estado = "internado";
-	Pruebapaciente.id_os = "Medicus";
-	//10242587 , Heidemaria , Sawyer , F , 19/2/1988 , internado , Medicus
 	pac.open("Pacientes.csv", ios::in);
-	if (!(pac.is_open()))
-		siabre = false;
-	else
-	{
-		siabre = true;
-		pruebaleer = Leer_Pacientes(aux, pac, tam1);
-	}
+	Leer_Pacientes(aux, pac, &tam1);
 	pac.close();
-	EXPECT_TRUE(pruebaleer == true);
-	EXPECT_THAT(aux[8].DNI, Pruebapaciente.DNI);
-	EXPECT_EQ(aux[8].Nombre, Pruebapaciente.Nombre);
-	EXPECT_EQ(aux[8].Apellido, Pruebapaciente.Apellido);
-	EXPECT_EQ(aux[8].Sexo, Pruebapaciente.Sexo);
-	EXPECT_EQ(aux[8].nacimiento.tm_mday, Pruebapaciente.nacimiento.tm_mday);
-	EXPECT_EQ(aux[8].nacimiento.tm_mon, Pruebapaciente.nacimiento.tm_mon);
-	EXPECT_EQ(aux[8].nacimiento.tm_year, Pruebapaciente.nacimiento.tm_year);
-	EXPECT_EQ(aux[8].estado, Pruebapaciente.estado);
-	EXPECT_EQ(aux[8].id_os, Pruebapaciente.id_os);
+
+	//10242587 , Heidemaria , Sawyer , F , 19/2/1988 , internado , Medicus
+	EXPECT_EQ(aux[1].DNI, 10242582);
+	EXPECT_EQ(aux[1].Nombre, "Cersty");
+	EXPECT_EQ(aux[1].Apellido, "Thurston");
+	EXPECT_EQ(aux[1].Sexo, 'F');
+	EXPECT_EQ(aux[1].nacimiento.tm_mday, 9);
+	EXPECT_EQ(aux[1].nacimiento.tm_mon, 6);
+	EXPECT_EQ(aux[1].nacimiento.tm_year, 1970);
+	EXPECT_EQ(aux[1].estado, "internado");
+	EXPECT_EQ(aux[1].id_os, "Medicus");
+
+	delete[]aux;
+}
+
+TEST(CasosBase, ResizePaciente)
+{
+	int tam = 0;
+	Contacto* ejemplo = new Contacto[tam];
+	Contacto auxcont;
+
+	auxcont.DNI = 45545166;
+	auxcont.telefono = "+54(011)40694412";
+	auxcont.celular = "+54(022)40961244";
+	auxcont.direccion = "Buckingham";
+	auxcont.mail = "nicolas.rapp@gmail.com";
+
+	resize_contactos(auxcont, ejemplo, &tam);
+
+	EXPECT_THAT(tam, 1);
+	EXPECT_EQ(ejemplo[0].DNI, 45545166);
+	EXPECT_EQ(ejemplo[0].telefono, "+54(011)40694412");
+	EXPECT_EQ(ejemplo[0].celular, "+54(022)40961244");
+	EXPECT_EQ(ejemplo[0].direccion, "Buckingham");
+	EXPECT_EQ(ejemplo[0].mail, "nicolas.rapp@gmail.com");
+
+	delete[] ejemplo;
 }
